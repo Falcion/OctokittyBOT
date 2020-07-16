@@ -23,3 +23,7 @@
 * Добавлены первые команды продвинутого функционала к GitHub API: repos-advshow, repos-advbranches, repos-advreleases
 * Удалён проектный модуль из-за ненадобности
 
+## 1.0.4a
+
+* Переименован класс AdvanceGit -> AdvancedGit
+* Обновлена комадна help

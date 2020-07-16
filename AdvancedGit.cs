@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Stratum
 {
-    public class AdvanceGit : ModuleBase<SocketCommandContext>
+    public class AdvancedGit : ModuleBase<SocketCommandContext>
     {
         Color msgColor = new Color(0x4FEFC8);
 
