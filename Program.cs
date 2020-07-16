@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Discord;
 using System.Reflection;
 using System.IO;
+using System.Text;
 
 namespace Stratum
 {
@@ -20,6 +21,7 @@ namespace Stratum
 
         private async Task RunAsync()
         {
+            Console.OutputEncoding = Encoding.UTF8;
 
             client = new DiscordSocketClient();
             cmd = new CommandService();
@@ -50,34 +52,34 @@ namespace Stratum
 
         private Task GuildRemove(SocketGuild guild)
         {
-            Console.WriteLine($"[{DateTime.Now}] Removed guild: {guild.Id}");
+            Console.WriteLine($"[{DateTime.Now}] Удалён сервер: {guild.Id}");
 
             return Task.CompletedTask;
         }
 
         private Task GuildAdd(SocketGuild guild)
         {
-            Console.WriteLine($"[{DateTime.Now}] Added new guild: {guild.Id}");
+            Console.WriteLine($"[{DateTime.Now}] Добавлен новый сервер: {guild.Id}");
 
             return Task.CompletedTask;
         }
 
         private Task Ready()
         {
-            Console.WriteLine($"[{DateTime.Now}] Client is ready.");
+            Console.WriteLine($"[{DateTime.Now}] Клиент запущен.");
 
             return Task.CompletedTask;
         }
 
         private Task Disconnected(Exception arg)
         {
-            Console.WriteLine($"[{DateTime.Now}] Client disconnected. Information included: {arg}");
+            Console.WriteLine($"[{DateTime.Now}] Клиент отключен. Информация включительна: {arg}");
             return Task.CompletedTask;
         }
 
         private Task Connected()
         {
-            Console.WriteLine($"[{DateTime.Now}] Client connected.");
+            Console.WriteLine($"[{DateTime.Now}] Клиент подключен.");
             return Task.CompletedTask;
         }
 
@@ -105,7 +107,7 @@ namespace Stratum
             int argPos = 0;
             if(msg.HasCharPrefix('~', ref argPos))
             {
-                Console.WriteLine($"[{DateTime.Now}] Initializing the command: {msg}");
+                Console.WriteLine($"[{DateTime.Now}] Инициализация команды: {msg}");
                 IResult result = await cmd.ExecuteAsync(context, argPos, service);
 
                 if (!result.IsSuccess)

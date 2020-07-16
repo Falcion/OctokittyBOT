@@ -12,3 +12,9 @@
 
 * Добавлена команда help
 
+## 1.0.3b
+
+* Добавлен модуль Git для взаимодействия с репозиториями и GitHub API в общем
+* Отредактированы другие команды
+* Добавлены комадны repos-show, repos-branches, repos-releases, repos-issues, repos-commits, gitapi-limit (для разработчика)
+
