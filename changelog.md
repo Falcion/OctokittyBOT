@@ -18,3 +18,8 @@
 * Отредактированы другие команды
 * Добавлены комадны repos-show, repos-branches, repos-releases, repos-issues, repos-commits, gitapi-limit (для разработчика)
 
+## 1.0.4
+
+* Добавлены первые команды продвинутого функционала к GitHub API: repos-advshow, repos-advbranches, repos-advreleases
+* Удалён проектный модуль из-за ненадобности
+
