@@ -36,9 +36,9 @@ namespace Stratum
                       .AddField("Описание репозитории:", repos.Description)
                       .AddField("ID репозитории:", $"{repos.Id}")
                       .AddField("Лицензия репозитории:", repos.License.Name)
-                      .AddField("Дата создания:", $"{repos.CreatedAt}")
+                      .AddField("Дата создания:", $"{repos.CreatedAt.DateTime}")
                       .AddField("Наименование репозитории:", repos.Name)
-                      .AddField("Последнее обновление:", $"{repos.UpdatedAt}");
+                      .AddField("Последнее обновление:", $"{repos.UpdatedAt.DateTime}");
 
             await Context.Channel.SendMessageAsync("", false, reposEmbed.Build());
         }
