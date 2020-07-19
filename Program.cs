@@ -19,8 +19,12 @@ namespace Stratum
         private CommandService cmd;
         private IServiceProvider service;
 
+        public string prefix;
+
         private async Task RunAsync()
         {
+            await Configuration();
+
             Console.OutputEncoding = Encoding.UTF8;
 
             client = new DiscordSocketClient();
@@ -48,6 +52,27 @@ namespace Stratum
             await client.StartAsync();
 
             await Task.Delay(-1);
+        }
+
+        private Task Configuration() 
+        {
+            if(!File.Exists("settings.conf")) 
+            {
+                File.Create("settings.conf").Close();
+                File.WriteAllText("settings.conf", "##############"
+                                                 + "# BOT PREFIX #"
+                                                 + "##############"
+                                                 + "USERPREFIX=~");
+            }
+
+            string[] fileLines = File.ReadAllLines("settings.conf");
+
+            for(int i = 0; i < fileLines.Length; i++) 
+            {
+                if(fileLines[i].StartsWith('#')) continue;
+
+                if(fileLines[i].StartsWith("PREFIX=")) prefix = fileLines[i].Remove(0, 7); 
+            }
         }
 
         private Task GuildRemove(SocketGuild guild)
@@ -105,7 +130,7 @@ namespace Stratum
             if (msg.Author.IsBot) return;
 
             int argPos = 0;
-            if(msg.HasCharPrefix('~', ref argPos))
+            if(msg.HasCharPrefix(prefix, ref argPos))
             {
                 Console.WriteLine($"[{DateTime.Now}] Инициализация команды: {msg}");
                 IResult result = await cmd.ExecuteAsync(context, argPos, service);
