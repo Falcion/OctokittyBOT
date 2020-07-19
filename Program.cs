@@ -73,6 +73,8 @@ namespace Stratum
 
                 if(fileLines[i].StartsWith("PREFIX=")) prefix = fileLines[i].Remove(0, 7); 
             }
+
+            return Task.CompletedTask;
         }
 
         private Task GuildRemove(SocketGuild guild)
@@ -130,7 +132,7 @@ namespace Stratum
             if (msg.Author.IsBot) return;
 
             int argPos = 0;
-            if(msg.HasCharPrefix(prefix, ref argPos))
+            if(msg.HasStringPrefix(prefix, ref argPos))
             {
                 Console.WriteLine($"[{DateTime.Now}] Инициализация команды: {msg}");
                 IResult result = await cmd.ExecuteAsync(context, argPos, service);
