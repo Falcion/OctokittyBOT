@@ -29,16 +29,21 @@ namespace Stratum
 
             EmbedBuilder reposEmbed = new EmbedBuilder();
 
+            string license = "";
+
+            if(repos.License == null) license = "Лицензия отсутствует";
+            else license = repos.License.Name;
+
             reposEmbed.WithTitle("Репозитория GitHub")
                       .WithColor(msgColor)
                       .WithCurrentTimestamp()
                       .WithThumbnailUrl(user.AvatarUrl)
                       .AddField("Описание репозитории:", repos.Description)
                       .AddField("ID репозитории:", $"{repos.Id}")
-                      .AddField("Лицензия репозитории:", repos.License.Name)
-                      .AddField("Дата создания:", $"{repos.CreatedAt.DateTime}")
+                      .AddField("Лицензия репозитории:", license)
+                      .AddField("Дата создания:", $"{repos.CreatedAt}")
                       .AddField("Наименование репозитории:", repos.Name)
-                      .AddField("Последнее обновление:", $"{repos.UpdatedAt.DateTime}");
+                      .AddField("Последнее обновление:", $"{repos.UpdatedAt}");
 
             await Context.Channel.SendMessageAsync("", false, reposEmbed.Build());
         }
@@ -153,7 +158,7 @@ namespace Stratum
             var allIssues = await gitClient.Issue.GetAllForRepository(reposAuthor, reposName);
             int repIssues = allIssues.Count;
 
-            issuesEmbed.WithAuthor("Выпуски репозитории")
+            issuesEmbed.WithAuthor("Темы репозитории")
                        .WithColor(msgColor)
                        .WithCurrentTimestamp()
                        .AddField("Всего открытых тем:", $"{issues.Count}")
@@ -199,7 +204,7 @@ namespace Stratum
             for(int i = 0; i < commitsCount; i++)
             {
                 GitHubCommit commitElement = commits[i];
-                commitEmbed.AddField($"{commitElement.Url}", $"Автор: {commitElement.Author.Login}");
+                commitEmbed.AddField($"{commitElement.HtmlUrl}", $"`GitHub API Url:` {commitElement.Url}");
             }
 
             await Context.Channel.SendMessageAsync("", false, commitEmbed.Build());
