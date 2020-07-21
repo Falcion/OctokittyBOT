@@ -34,10 +34,13 @@ namespace Stratum
             if(repos.License == null) license = "Лицензия отсутствует";
             else license = repos.License.Name;
 
+            string gitUrl = $"https://github.com/{gitAuthor}/{reposName}";
+
             reposEmbed.WithTitle("Репозитория GitHub")
                       .WithColor(msgColor)
                       .WithCurrentTimestamp()
                       .WithThumbnailUrl(user.AvatarUrl)
+                      .WithUrl(gitUrl)
                       .AddField("Описание репозитории:", repos.Description)
                       .AddField("ID репозитории:", $"{repos.Id}")
                       .AddField("Лицензия репозитории:", license)
@@ -62,9 +65,12 @@ namespace Stratum
 
             EmbedBuilder branchesEmbed = new EmbedBuilder();
 
+            string gitUrl = $"https://github.com/{reposAuthor}/{reposName}";
+
             branchesEmbed.WithTitle("Ветки репозитории")
                          .WithColor(msgColor)
                          .WithCurrentTimestamp()
+                         .WithUrl(gitUrl)
                          .AddField("Ссылка на все ветки:", $"https://github.com/{reposAuthor}/{reposName}/branches");
 
 
@@ -110,10 +116,13 @@ namespace Stratum
                 isNan = "Нет.";
             }
 
+            string gitUrl = $"https://github.com/{reposAuthor}/{reposName}";
+
             releaseEmbed.WithAuthor("Выпуски репозитории")
                         .WithColor(msgColor)
                         .WithCurrentTimestamp()
                         .WithThumbnailUrl(user.AvatarUrl)
+                        .WithUrl(gitUrl)
                         .AddField("Общее количество выпусков:", $"{releases.Count}")
                         .AddField("Полный ли список:", isNan)
                         .AddField("Ссылка на выпуски репозитории:", $"https://github.com/{reposAuthor}/{reposName}/releases");
@@ -158,6 +167,8 @@ namespace Stratum
             var allIssues = await gitClient.Issue.GetAllForRepository(reposAuthor, reposName);
             int repIssues = allIssues.Count;
 
+            string gitUrl = $"https://github.com/{reposAuthor}/{reposName}";
+
             issuesEmbed.WithAuthor("Темы репозитории")
                        .WithColor(msgColor)
                        .WithCurrentTimestamp()
@@ -195,9 +206,13 @@ namespace Stratum
 
             EmbedBuilder commitEmbed = new EmbedBuilder();
 
+            string gitUrl = $"https://github.com/{reposAuthor}/{reposName}";
+            
             commitEmbed.WithTitle("Обновления репозитории")
+
                        .WithColor(msgColor)
                        .WithCurrentTimestamp()
+                       .WithUrl(gitUrl)
                        .AddField("Всего обновлений:", $"{commits.Count}")
                        .AddField("Ссылка на обновления (по указанной ветке):", $"https://github.com/{reposAuthor}/{reposName}/commits/{commitBranch}");
 
