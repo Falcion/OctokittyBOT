@@ -50,7 +50,7 @@ namespace Stratum
 
             await client.LoginAsync(TokenType.Bot, token);
             await client.StartAsync();
-
+            await client.SetGameAsync($"{prefix}help");
             await Task.Delay(-1);
         }
 
