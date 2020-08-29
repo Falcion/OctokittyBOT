@@ -119,7 +119,12 @@ namespace Stratum {
                 IResult result 
                             = await command.ExecuteAsync(commandContext, argPos, service);
 
-                if(!result.IsSuccess) Console.WriteLine(result.Error + " caused by " + result.ErrorReason);
+                if(!result.IsSuccess) {
+                    Console.WriteLine(result.Error + " caused by " + result.ErrorReason);
+
+                    await commandContext.Channel.
+                                        SendMessageAsync("**Error: " + result.Error + "\nReason: " + result.ErrorReason + "**", true);
+                }
                 else Console.WriteLine(result);
             }
         }
