@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Stratum {
 
-    public class Commands : ModuleBase<SocketCommandContext> {
+    public class Git : ModuleBase<SocketCommandContext> {
 
         [Command("gitapi-limit")]
         [RequireContext(ContextType.Guild)]
