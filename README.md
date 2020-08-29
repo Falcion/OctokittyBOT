@@ -19,6 +19,13 @@ Stratum was written in [Visual Studio](https://visualstudio.microsoft.com/) and 
 
 His current potential is restricted by [GitHub API OAuth](https://developer.github.com/v3/).
 
+**Documentations List:**
+
+*   [Octokit](https://octokitnet.readthedocs.io/en/latest/)
+*   [Discord.net](https://discord.foxbot.me/docs/)
+*   [C# (Microsoft)](https://docs.microsoft.com/en-us/dotnet/csharp/)
+*   [GitHub API](https://docs.github.com/en/rest)
+
 ## Command-List
 
 | Command | Information | Syntax |

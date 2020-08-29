@@ -12,7 +12,7 @@ namespace Stratum {
 
     public class Program {
 
-        string authToken, prefix;
+        public string authToken, apiToken, prefix;
 
         static void Main(string[] args)
             => new Program().Run().GetAwaiter().GetResult();
@@ -34,6 +34,8 @@ namespace Stratum {
                                             .AddSingleton(command)
                                             .BuildServiceProvider();
 
+            await Registry();
+
             client.Log += Log;
 
             await client.LoginAsync(TokenType.Bot, authToken);
@@ -43,7 +45,6 @@ namespace Stratum {
         }
 
         private Task Log(LogMessage message) {
-
             Console.WriteLine(message);
 
             return Task.CompletedTask;
@@ -52,7 +53,7 @@ namespace Stratum {
         private Task Configuration() {
 
             if(!File.Exists(".conf")) {
-                string configDefault = "authToken = \"\"" + Environment.NewLine + "prefix = \"$ \"";
+                string configDefault = "authToken = \"\"" + Environment.NewLine + "apiToken = \"\"" + Environment.NewLine + "prefix = \"$ \"";
 
                 File.Create(".conf")
                                     .Close();
@@ -70,11 +71,26 @@ namespace Stratum {
 
                     if(configArray[i].StartsWith(' ')) continue;
 
-                    if(configArray[i].StartsWith("authToken ="))
-                                    authToken = LineParse(11, configArray[i]);
+                    if(configArray[i].StartsWith("authToken =")) {
+                        
+                        authToken = LineParse(11, configArray[i]);
+                        Storage.authToken 
+                                = LineParse(11, configArray[i]);
+                    }
 
-                    if(configArray[i].StartsWith("prefix ="))
-                                    prefix = LineParse(8, configArray[i]);                        
+                    if(configArray[i].StartsWith("apiToken =")) {
+                        
+                        apiToken = LineParse(10, configArray[i]);
+                        Storage.apiToken 
+                                = LineParse(10, configArray[i]);
+                    }
+
+                    if(configArray[i].StartsWith("prefix =")) {
+                        
+                        prefix = LineParse(8, configArray[i]);
+                        Storage.prefix 
+                                = LineParse(8, configArray[i]);      
+                    }                  
             }
 
             return Task.CompletedTask;
@@ -103,7 +119,7 @@ namespace Stratum {
                 IResult result 
                             = await command.ExecuteAsync(commandContext, argPos, service);
 
-                if(!result.IsSuccess) Console.WriteLine(result.Error);
+                if(!result.IsSuccess) Console.WriteLine(result.Error + " caused by " + result.ErrorReason);
                 else Console.WriteLine(result);
             }
         }
