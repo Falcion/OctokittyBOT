@@ -61,7 +61,7 @@ namespace Stratum {
 
                 Console.WriteLine("Created default configuration file. Please, type in your bot token!");
 
-                return Task.CompletedTask;
+                Error("Awaiting for bot token.");
             }
 
             string[] configArray = File.ReadAllLines(".conf", Encoding.UTF8);
