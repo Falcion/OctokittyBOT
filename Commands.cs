@@ -53,5 +53,48 @@ namespace Stratum {
             await Context.Channel.SendMessageAsync("", false,
                                                             messageEmbed.Build()    );
         }
+
+        [Command("repos-info")]
+        [RequireContext(ContextType.Guild)]
+
+        public async Task ReposInfo(string gitAuthor, string gitRepos) {
+
+            string apiToken
+                    = Storage.apiToken;
+
+            string gitURL
+                    = "https://github.com/" + gitAuthor + '/' + gitRepos;
+
+            GitHubClient gitClient
+                                = new GitHubClient(new ProductHeaderValue("Stratum"));
+
+            Credentials tokenAuth 
+                        = new Credentials(apiToken);
+                        
+            gitClient.Credentials = tokenAuth;
+
+            User gitUser
+                    = await gitClient.User.Get(gitAuthor);
+
+            Repository Repository
+                            = await gitClient.Repository.Get(gitAuthor, gitRepos);
+
+            EmbedBuilder messageEmbed = new EmbedBuilder()
+
+                                                        .WithTitle("GitHub Repository")
+                                                        .WithDescription(Repository.Description)
+                                                        .WithColor(Color.LightGrey)
+                                                        .WithCurrentTimestamp()
+                                                        .WithThumbnailUrl(gitUser.AvatarUrl)
+                                                        .WithUrl(gitURL)
+                                                        .AddField("Repository's ID:", Repository.Id)
+                                                        .AddField("Repository's License:", Repository.License.Name)
+                                                        .AddField("Creation Date:", Repository.CreatedAt)
+                                                        .AddField("Repository's Name:", Repository.Name)
+                                                        .AddField("Last Update:", Repository.UpdatedAt);
+
+            await Context.Channel.SendMessageAsync("", false,
+                                                messageEmbed.Build());
+        }
     }
 }
