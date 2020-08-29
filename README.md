@@ -9,6 +9,8 @@ Stratum was written in [Visual Studio](https://visualstudio.microsoft.com/) and 
 
 ![octokit.net-package](https://img.shields.io/nuget/v/Octokit?color=blue&label=Octokit&style=for-the-badge)
 
+![dependencyInjection-package](https://img.shields.io/nuget/vpre/Microsoft.Extensions.DependencyInjection?label=DependencyInjection&style=for-the-badge)
+
 ** **
 
 ## Information
