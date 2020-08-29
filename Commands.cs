@@ -51,7 +51,7 @@ namespace Stratum {
                                                         .AddField("Search Information", searchInformation);
 
             await Context.Channel.SendMessageAsync("", false,
-                                                            messageEmbed.Build()    );
+                                                        messageEmbed.Build()    );
         }
 
         [Command("repos-info")]
@@ -94,7 +94,7 @@ namespace Stratum {
                                                         .AddField("Last Update:", Repository.UpdatedAt);
 
             await Context.Channel.SendMessageAsync("", false,
-                                                messageEmbed.Build()    );
+                                                        messageEmbed.Build()    );
         }
 
         [Command("repos-branches")]
@@ -134,6 +134,52 @@ namespace Stratum {
                                                         .WithCurrentTimestamp()
                                                         .WithUrl(gitURL)
                                                         .AddField("Branch List:", branchList);
+
+            await Context.Channel.SendMessageAsync("", false,
+                                                        messageEmbed.Build()    );
+        }
+
+        [Command("repos-releases")]
+        [RequireContext(ContextType.Guild)]
+        public async Task ReposReleases(string gitAuthor, string gitRepos, int page = 0) {
+
+            string apiToken
+                    = Storage.apiToken;
+
+            string gitURL
+                    = "https://github.com/" + gitAuthor + '/' + gitRepos + '/' + "releases";
+
+            GitHubClient gitClient
+                                = new GitHubClient(new ProductHeaderValue("Stratum"));
+
+            Credentials tokenAuth 
+                        = new Credentials(apiToken);
+                        
+            gitClient.Credentials = tokenAuth;
+
+            IReadOnlyList<Release> releaseArray
+                                = await gitClient.Repository.Release.GetAll(gitAuthor, gitRepos);
+
+            int releaseCount 
+                    = releaseArray.Count;
+
+            EmbedBuilder messageEmbed = new EmbedBuilder()
+
+                                                        .WithTitle("Repository's Releases")
+                                                        .WithFooter(
+                                                            footer => footer.Text = "For next page: type number (integer) of page.")
+                                                        .WithColor(Color.LighterGrey)
+                                                        .WithUrl(gitURL);
+            int embedCounter = 0;
+            for(int i = 0 + 25 * page; i < releaseCount; i++) {
+                ++embedCounter;
+                if(embedCounter == 25) 
+                                    break;
+
+                Release release = releaseArray[i];
+
+                messageEmbed.AddField(release.Name, "Tag: " + release.TagName + "\nPublished At: " + release.PublishedAt);
+            }
 
             await Context.Channel.SendMessageAsync("", false,
                                                         messageEmbed.Build()    );
