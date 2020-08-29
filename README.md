@@ -31,7 +31,8 @@ His current potential is restricted by [GitHub API OAuth](https://developer.gith
 | Command | Information | Syntax |
 | :------ | :---------: | -----: |
 | gitapi-limit | Shows information about current GitHub API Limits (for Core and Search Requests). | ``gitapi-limit`` |
-| repos-info | Shows information about specified repository. | ``repos-info [author] [name]``
+| repos-info | Shows information about specified repository. | ``repos-info [author] [name]`` |
+| repos-branches | Shows information about branches of specified repository. | ``repos-branches [author] [name]`` |
 
 
 ## License

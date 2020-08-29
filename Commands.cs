@@ -2,7 +2,7 @@ using Discord.Commands;
 using System.Threading.Tasks;
 using Octokit;
 using Discord;
-using System;
+using System.Collections.Generic;
 
 namespace Stratum {
 
@@ -94,7 +94,49 @@ namespace Stratum {
                                                         .AddField("Last Update:", Repository.UpdatedAt);
 
             await Context.Channel.SendMessageAsync("", false,
-                                                messageEmbed.Build());
+                                                messageEmbed.Build()    );
+        }
+
+        [Command("repos-branches")]
+        [RequireContext(ContextType.Guild)]
+
+        public async Task ReposBranches(string gitAuthor, string gitRepos) {
+
+            string apiToken
+                    = Storage.apiToken;
+
+            string gitURL
+                    = "https://github.com/" + gitAuthor + '/' + gitRepos + '/' + "branches";
+
+            GitHubClient gitClient
+                                = new GitHubClient(new ProductHeaderValue("Stratum"));
+
+            Credentials tokenAuth 
+                        = new Credentials(apiToken);
+                        
+            gitClient.Credentials = tokenAuth;
+
+            IReadOnlyList<Branch> branchArray
+                            = await gitClient.Repository.Branch.GetAll(gitAuthor, gitRepos);
+
+            string branchList = null;
+
+            for(int i = 0; i < branchArray.Count; i++) {
+                Branch branch = branchArray[i];
+
+                branchList += branch.Name + "\n";
+            }
+
+            EmbedBuilder messageEmbed = new EmbedBuilder()
+
+                                                        .WithTitle("Repository's Branches")
+                                                        .WithColor(Color.LightGrey)
+                                                        .WithCurrentTimestamp()
+                                                        .WithUrl(gitURL)
+                                                        .AddField("Branch List:", branchList);
+
+            await Context.Channel.SendMessageAsync("", false,
+                                                        messageEmbed.Build()    );
         }
     }
 }
