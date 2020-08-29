@@ -130,6 +130,7 @@ namespace Stratum {
             EmbedBuilder messageEmbed = new EmbedBuilder()
 
                                                         .WithTitle("Repository's Branches")
+                                                        .WithDescription("Below you can see repository's branches, for GitHub repository's branches page, you can open title with special url.")
                                                         .WithColor(Color.LightGrey)
                                                         .WithCurrentTimestamp()
                                                         .WithUrl(gitURL)
@@ -166,6 +167,7 @@ namespace Stratum {
             EmbedBuilder messageEmbed = new EmbedBuilder()
 
                                                         .WithTitle("Repository's Releases")
+                                                        .WithDescription("Below you can see repository's releases, for more releases that can't fit in this list you need to type an number of page.")
                                                         .WithFooter(
                                                             footer => footer.Text = "For next page: type number (integer) of page.")
                                                         .WithColor(Color.LighterGrey)
