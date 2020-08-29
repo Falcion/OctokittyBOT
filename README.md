@@ -34,7 +34,7 @@ His current potential is restricted by [GitHub API OAuth](https://developer.gith
 | repos-info | Shows information about specified repository. | ``repos-info [author] [name]`` |
 | repos-branches | Shows information about branches of specified repository. | ``repos-branches [author] [name]`` |
 | repos-releases | Shows information about releases of specified repository (includes page-system.) | ``repos-releases [author] [name]`` |
-| search-users | Shows list of users that sorted by specified filters. For more information [check this](https://github.com/Falcion/Stratum/blob/master/Syntax/SEARCH-USERS.md).) | ``search-users [filters]``
+| search-users | Shows list of users that sorted by specified filters. For more information [check this](https://github.com/Falcion/Stratum/blob/master/Syntax/SEARCH-USERS.md). | ``search-users [filters]``
 
 
 ## License
