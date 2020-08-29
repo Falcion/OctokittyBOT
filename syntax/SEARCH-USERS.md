@@ -17,7 +17,6 @@
 
 Press **Ctrl+F** and find your language! But, not all languages are supported at the moment because of [Octokit.net](https://octokitnet.readthedocs.io/en/latest/).
 
-||
 ** **
 
 | Language (GitHub) | Filter's ID |
@@ -217,4 +216,3 @@ Press **Ctrl+F** and find your language! But, not all languages are supported at
 | Yaml | ``yaml`` |
 
 ** **
-||
