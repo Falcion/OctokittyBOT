@@ -123,7 +123,7 @@ namespace Stratum {
                     Console.WriteLine(result.Error + " caused by " + result.ErrorReason);
 
                     await commandContext.Channel.
-                                        SendMessageAsync("**Error: " + result.Error + "\nReason: " + result.ErrorReason + "**", true);
+                                        SendMessageAsync("**Error:** " + result.Error + "\n**Reason:** " + result.ErrorReason, true);
                 }
                 else Console.WriteLine(result);
             }
