@@ -3,7 +3,9 @@ using Octokit;
 public class LanguageRequester {
 
         public Language LanguageRegister(string filterString) {
-            filterString = filterString.Remove(0, 7);
+
+            filterString 
+                    = filterString.Remove(0, 10);
 
             switch(filterString) {
 
