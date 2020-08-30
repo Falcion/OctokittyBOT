@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Octokit;
 using Discord;
 using System.Collections.Generic;
+using System;
 
 namespace Stratum {
 
@@ -319,6 +320,103 @@ namespace Stratum {
                 string issueDesc = "Link: " + issue.Url + $"\nIssue Update: {issue.UpdatedAt}";
 
                 messageEmbed.AddField(issueTitle, issueDesc);
+            }
+
+            await Context.Channel.SendMessageAsync("", false,
+                                                        messageEmbed.Build()    );
+        }
+
+        [Command("repos-commits")]
+        [RequireContext(ContextType.Guild)]
+
+        public async Task ReposCommits(string gitAuthor, string gitRepos, int page, [Remainder]string filters = "") {
+
+            string apiToken
+                    = Storage.apiToken;
+
+            string gitURL
+                    = "https://github.com/" + gitAuthor + '/' + gitRepos + '/' + "commit/";
+
+            GitHubClient gitClient
+                                = new GitHubClient(new ProductHeaderValue("Stratum"));
+
+            Credentials tokenAuth 
+                        = new Credentials(apiToken);
+                        
+            gitClient.Credentials = tokenAuth;
+
+            string[] filterArray = filters.Split("[+]");
+
+            DateTime dateChecker = DateTime.Now;
+
+            DateTime untilDate = dateChecker,
+                     sinceDate = dateChecker;
+
+            string commitAuthor = "none",
+                   path = "none",
+                   sha = "none";
+
+            for(int i = 0; i < filterArray.Length; i++) {
+
+                if(filterArray[i].StartsWith(" until: ")) {
+
+                    filterArray[i] 
+                            = filterArray[i].Remove(0, 8);
+
+                    untilDate = DateTime.Parse(filterArray[i]);
+                }
+
+                if(filterArray[i].StartsWith(" since: ")) {
+
+                    filterArray[i]
+                            = filterArray[i].Remove(0, 8);
+
+                    sinceDate = DateTime.Parse(filterArray[i]);
+                }
+
+                if(filterArray[i].StartsWith(" author: ")) 
+                                commitAuthor = filterArray[i].Remove(0, 9);
+
+                if(filterArray[i].StartsWith(" path: "))
+                                path = filterArray[i].Remove(0, 7);
+
+                if(filterArray[i].StartsWith(" sha: "))
+                                sha = filterArray[i].Remove(0, 6);
+            }
+
+            IReadOnlyList<GitHubCommit> commitArray;
+
+            if(untilDate == dateChecker && commitAuthor == "none" && path == "none" && sha == "none")
+                                    commitArray = await gitClient.Repository.Commit.GetAll(gitAuthor, gitRepos);
+
+            else {
+                CommitRequest commitRequest
+                            = new CommitRequester().CommitRegister(commitAuthor, path, sha, untilDate, sinceDate, dateChecker);
+
+                commitArray = await gitClient.Repository.Commit.GetAll(gitAuthor, gitRepos, commitRequest);
+            }
+
+            if(page > 0) page--;
+            else if(page <= 0) page = 0;
+
+            EmbedBuilder messageEmbed = new EmbedBuilder()
+
+                                                        .WithTitle("Repository's Commits")
+                                                        .WithDescription($"All sorted (that were found) commits count: {commitArray.Count}. For more information, click on the title hyperlink or type page number (integer).")
+                                                        .WithColor(Color.LighterGrey)
+                                                        .WithCurrentTimestamp()
+                                                        .WithUrl(gitURL);
+
+            int algBreaker = 0;
+            for(int i = 0 + 25 * page; i < commitArray.Count; i++) {
+                algBreaker++;
+                if(algBreaker == 25) break;
+
+                GitHubCommit commit = commitArray[i];
+                
+                string commitInfo = "Commit's Author: " + commit.Author.Login + "\nCommit's URL: " + commit.Url;
+
+                messageEmbed.AddField("Commit's SHA: " + commit.Sha, commitInfo);
             }
 
             await Context.Channel.SendMessageAsync("", false,

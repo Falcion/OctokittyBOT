@@ -35,6 +35,7 @@ His current potential is restricted by [GitHub API OAuth](https://developer.gith
 | repos-branches | Shows information about branches of specified repository. | ``repos-branches [author] [name]`` |
 | repos-releases | Shows information about releases of specified repository (includes page-system.) | ``repos-releases [author] [name]`` |
 | repos-issues | Shows list of issues in specified repository that sorted by specified filters. For more information [check this](https://github.com/Falcion/Stratum/blob/syntax/.wikia/REPOS-ISSUES.md). | ``repos-issues [author] [name] [page number] [filters]`` |
+| repos-commits | Shows list of commits in specified repository that sorted by specified filters. For more information [check this](https://github.com/Falcion/Stratum/blob/syntax/.wikia/REPOS-COMMITS.md). | ``repos-commits [author] [name] [page number] [filters]`` |
 | search-users | Shows list of users that sorted by specified filters. For more information [check this](https://github.com/Falcion/Stratum/blob/syntax/.wikia/SEARCH-USERS.md). | ``search-users [filters]`` |
 
 
