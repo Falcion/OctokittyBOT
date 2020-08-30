@@ -10,7 +10,6 @@ namespace Stratum {
     public class Git : ModuleBase<SocketCommandContext> {
 
         [Command("gitapi-limit")]
-        [RequireContext(ContextType.Guild)]
 
         public async Task ApiLimit() {
 
@@ -56,7 +55,6 @@ namespace Stratum {
         }
 
         [Command("repos-info")]
-        [RequireContext(ContextType.Guild)]
 
         public async Task ReposInfo(string gitAuthor, string gitRepos) {
 
@@ -99,7 +97,6 @@ namespace Stratum {
         }
 
         [Command("repos-branches")]
-        [RequireContext(ContextType.Guild)]
 
         public async Task ReposBranches(string gitAuthor, string gitRepos) {
 
@@ -142,7 +139,6 @@ namespace Stratum {
         }
 
         [Command("repos-releases")]
-        [RequireContext(ContextType.Guild)]
         public async Task ReposReleases(string gitAuthor, string gitRepos, int page = 0) {
 
             string apiToken
@@ -189,7 +185,7 @@ namespace Stratum {
         }
 
         [Command("repos-issues")]
-        [RequireContext(ContextType.Guild)]
+
 
         public async Task ReposIssues(string gitAuthor, string gitRepos, int page, [Remainder]string filters) {
 
