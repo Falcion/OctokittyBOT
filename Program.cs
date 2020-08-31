@@ -120,12 +120,33 @@ namespace Stratum {
                             = await command.ExecuteAsync(commandContext, argPos, service);
 
                 if(!result.IsSuccess) {
+
                     Console.WriteLine(result.Error + " caused by " + result.ErrorReason);
 
-                    await commandContext.Channel.
-                                        SendMessageAsync("**Error:** " + result.Error + "\n**Reason:** " + result.ErrorReason, true);
+                    EmbedBuilder messageEmbed = new EmbedBuilder()
+
+                                                                .WithTitle("Error")
+                                                                .WithColor(Color.Red)
+                                                                .WithCurrentTimestamp()
+                                                                .AddField("Error: ", result.Error, true)
+                                                                .AddField("Error Reason:", result.ErrorReason, true);
+
+                    await commandContext.Channel.SendMessageAsync("", false, messageEmbed.Build()   );
                 }
-                else Console.WriteLine(result);
+
+                else {
+
+                    Console.WriteLine(result);
+
+                    EmbedBuilder messageEmbed = new EmbedBuilder()
+
+                                                                .WithTitle("Command Success")
+                                                                .WithColor(Color.Green)
+                                                                .WithCurrentTimestamp()
+                                                                .AddField("Result: ", result, true);
+
+                    await commandContext.Message.Author.SendMessageAsync("", false, messageEmbed.Build()    );
+                }
             }
         }
 

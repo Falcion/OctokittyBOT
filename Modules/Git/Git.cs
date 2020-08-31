@@ -45,7 +45,7 @@ namespace Stratum {
 
                                                         .WithTitle("GitHub API Limit")
                                                         .WithDescription("Like any popular API, Github needs to throttle some requests. The OctoKit.NET client allows you to get some insight into how many requests you have left and when you can start making requests again.")
-                                                        .WithColor(Color.DarkerGrey)
+                                                        .WithColor(Color.Default)
                                                         .WithCurrentTimestamp()
                                                         .AddField("Core Information", coreInformation)
                                                         .AddField("Search Information", searchInformation);
@@ -82,7 +82,7 @@ namespace Stratum {
 
                                                         .WithTitle("GitHub Repository")
                                                         .WithDescription(Repository.Description)
-                                                        .WithColor(Color.LightGrey)
+                                                        .WithColor(Color.Green)
                                                         .WithCurrentTimestamp()
                                                         .WithThumbnailUrl(gitUser.AvatarUrl)
                                                         .WithUrl(gitURL)
@@ -129,7 +129,7 @@ namespace Stratum {
 
                                                         .WithTitle("Repository's Branches")
                                                         .WithDescription("Below you can see repository's branches, for GitHub repository's branches page, you can open title with special url.")
-                                                        .WithColor(Color.LightGrey)
+                                                        .WithColor(Color.Green)
                                                         .WithCurrentTimestamp()
                                                         .WithUrl(gitURL)
                                                         .AddField("Branch List:", branchList);
@@ -167,7 +167,7 @@ namespace Stratum {
                                                         .WithDescription("Below you can see repository's releases, for more releases that can't fit in this list you need to type an number of page.")
                                                         .WithFooter(
                                                             footer => footer.Text = "For next page: type number (integer) of page.")
-                                                        .WithColor(Color.LighterGrey)
+                                                        .WithColor(Color.Green)
                                                         .WithUrl(gitURL);
             int embedCounter = 0;
             for(int i = 0 + 25 * page; i < releaseCount; i++) {
@@ -299,7 +299,7 @@ namespace Stratum {
                                                         
                                                          .WithTitle("Repository's Issues")
                                                          .WithDescription($"All sorted issues count: {issuesArray.Count}. For more information, click on the title hyperlink or type page number (integer).")
-                                                         .WithColor(Color.LighterGrey)
+                                                         .WithColor(Color.Green)
                                                          .WithCurrentTimestamp()
                                                          .WithUrl(gitURL);
             
@@ -399,7 +399,7 @@ namespace Stratum {
 
                                                         .WithTitle("Repository's Commits")
                                                         .WithDescription($"All sorted (that were found) commits count: {commitArray.Count}. For more information, click on the title hyperlink or type page number (integer).")
-                                                        .WithColor(Color.LighterGrey)
+                                                        .WithColor(Color.Green)
                                                         .WithCurrentTimestamp()
                                                         .WithUrl(gitURL);
 
