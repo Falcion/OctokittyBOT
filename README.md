@@ -31,6 +31,8 @@ His current potential is restricted by [GitHub API OAuth](https://developer.gith
 | Command | Information | Syntax |
 | :------: | :---------: | :-----: |
 | gitapi-limit | Shows information about current GitHub API Limits (for Core and Search Requests). | ``gitapi-limit`` |
+| gitapi-help | Shows information about all commands. | ``gitapi-help`` |
+| gitapi-links | Shows all specified links of this project. | ``gitapi-links`` |
 | repos-info | Shows information about specified repository. | ``repos-info [repository author] [repository name]`` |
 | repos-branches | Shows information about branches of specified repository. | ``repos-branches [repository author] [repository name]`` |
 | repos-releases | Shows information about releases of specified repository (includes page-system.) | ``repos-releases [repository author] [repository name]`` |
@@ -41,6 +43,8 @@ His current potential is restricted by [GitHub API OAuth](https://developer.gith
 | release-info | Shows advanced information about specified release. | ``release-info [repository author] [repository name] [tag]`` |
 | issue-info | Shows advanced information about specified issue. | ``issue-info [repository author] [repository name] [issue number]`` |
 | commit-info | Shows advanced information about specified commit. | ``commit-info [repository author] [repository name] [reference]`` |
+| organization | Shows information about organization. | ``organization [username (login)]`` |
+| pull-request | Shows information about pull request. | ``pull-request [repository author] [repository name] [pull request number]`` |
 | user-core | Shows advanced information about user. | ``user-core [username (login)]`` |
 | search-users | Shows list of users that sorted by specified filters. For more information [check this](https://github.com/Falcion/Stratum/blob/syntax/.wikia/SEARCH-USERS.md). | ``search-users [filters]`` |
 
