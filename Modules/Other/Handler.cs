@@ -23,7 +23,7 @@ namespace Stratum {
         
                                                         .WithTitle("GitHub API - Help")
                                                         .WithDescription("For additional links, please type: ``gitapi-links`` and you'll get all information, links and etc.")
-                                                        .WithColor(Color.LighterGrey)
+                                                        .WithColor(Color.Default)
                                                         .WithCurrentTimestamp()
                                                         .WithUrl(baseURL + gitURL[2])
                                                         .WithThumbnailUrl(imgURL)
@@ -58,7 +58,7 @@ namespace Stratum {
             EmbedBuilder messageEmbed = new EmbedBuilder()
 
                                                         .WithTitle("GitHub API - Links")
-                                                        .WithColor(Color.LighterGrey)
+                                                        .WithColor(Color.Default)
                                                         .WithCurrentTimestamp()
                                                         .WithUrl("https://github.com/Falcion/Stratum#information")
                                                         .WithThumbnailUrl(imgURL)

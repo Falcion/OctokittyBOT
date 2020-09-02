@@ -32,7 +32,7 @@ namespace Stratum {
 
                                                         .WithTitle(organization.Name + "'s Information")
                                                         .WithDescription(organization.Bio)
-                                                        .WithColor(Color.Teal)
+                                                        .WithColor(Color.Default)
                                                         .WithCurrentTimestamp()
                                                         .WithThumbnailUrl(organization.AvatarUrl)
                                                         .WithUrl(gitURL)
@@ -71,7 +71,7 @@ namespace Stratum {
 
                                                         .WithTitle(pullRequest.Title)
                                                         .WithDescription(pullRequest.Body)
-                                                        .WithColor(Color.Teal)
+                                                        .WithColor(Color.Default)
                                                         .WithCurrentTimestamp()
                                                         .WithThumbnailUrl(pullRequest.User.AvatarUrl)
                                                         .WithUrl(gitURL)

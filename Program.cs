@@ -128,8 +128,8 @@ namespace Stratum {
                                                                 .WithTitle("Error")
                                                                 .WithColor(Color.Red)
                                                                 .WithCurrentTimestamp()
-                                                                .AddField("Error: ", result.Error, true)
-                                                                .AddField("Error Reason:", result.ErrorReason, true);
+                                                                .AddField("Error:", result.Error)
+                                                                .AddField("Error Reason:", result.ErrorReason);
 
                     await commandContext.Channel.SendMessageAsync("", false, messageEmbed.Build()   );
                 }

@@ -38,7 +38,7 @@ namespace Stratum {
             EmbedBuilder messageEmbed = new EmbedBuilder()
 
                                                         .WithTitle("Repository's Core Info")
-                                                        .WithColor(Color.Gold)
+                                                        .WithColor(Color.Default)
                                                         .WithCurrentTimestamp()
                                                         .WithThumbnailUrl(gitUser.AvatarUrl)
                                                         .WithUrl(gitURL)
@@ -77,7 +77,7 @@ namespace Stratum {
             EmbedBuilder messageEmbed = new EmbedBuilder()
 
                                                         .WithTitle("Branch's Info")
-                                                        .WithColor(Color.Gold)
+                                                        .WithColor(Color.Default)
                                                         .WithCurrentTimestamp()
                                                         .WithThumbnailUrl(gitUser.AvatarUrl)
                                                         .WithUrl(gitURL)
@@ -117,7 +117,7 @@ namespace Stratum {
 
                                                         .WithTitle(release.Name)
                                                         .WithDescription(release.Body)
-                                                        .WithColor(Color.Gold)
+                                                        .WithColor(Color.Default)
                                                         .WithCurrentTimestamp()
                                                         .WithThumbnailUrl(gitUser.AvatarUrl)
                                                         .WithUrl(gitURL)
@@ -158,7 +158,7 @@ namespace Stratum {
 
                                                         .WithTitle(issue.Title + "(#" + issue.Number + ')')
                                                         .WithDescription(issue.Body)
-                                                        .WithColor(Color.Gold)
+                                                        .WithColor(Color.Default)
                                                         .WithCurrentTimestamp()
                                                         .WithThumbnailUrl(issue.User.AvatarUrl)
                                                         .WithUrl(gitURL)
@@ -199,7 +199,7 @@ namespace Stratum {
 
                                                         .WithTitle("Commit's Info")
                                                         .WithDescription(commit.Commit.Message)
-                                                        .WithColor(Color.Gold)
+                                                        .WithColor(Color.Default)
                                                         .WithCurrentTimestamp()
                                                         .WithThumbnailUrl(commit.Author.AvatarUrl)
                                                         .WithUrl(gitURL)
@@ -244,7 +244,7 @@ namespace Stratum {
 
                                                         .WithTitle(gitUser.Name + "'s Information")
                                                         .WithDescription(gitUser.Bio)
-                                                        .WithColor(Color.Gold)
+                                                        .WithColor(Color.Default)
                                                         .WithCurrentTimestamp()
                                                         .WithThumbnailUrl(gitUser.AvatarUrl)
                                                         .WithUrl(gitURL)

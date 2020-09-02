@@ -5,7 +5,7 @@ public class LanguageRequester {
         public Language LanguageRegister(string filterString) {
 
             filterString 
-                    = filterString.Remove(0, 10);
+                    = filterString.Remove(0, 11);
 
             switch(filterString) {
 

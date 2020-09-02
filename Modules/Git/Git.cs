@@ -82,7 +82,7 @@ namespace Stratum {
 
                                                         .WithTitle("GitHub Repository")
                                                         .WithDescription(Repository.Description)
-                                                        .WithColor(Color.Green)
+                                                        .WithColor(Color.Default)
                                                         .WithCurrentTimestamp()
                                                         .WithThumbnailUrl(gitUser.AvatarUrl)
                                                         .WithUrl(gitURL)
@@ -129,7 +129,7 @@ namespace Stratum {
 
                                                         .WithTitle("Repository's Branches")
                                                         .WithDescription("Below you can see repository's branches, for GitHub repository's branches page, you can open title with special url.")
-                                                        .WithColor(Color.Green)
+                                                        .WithColor(Color.Default)
                                                         .WithCurrentTimestamp()
                                                         .WithUrl(gitURL)
                                                         .AddField("Branch List:", branchList);
@@ -167,7 +167,7 @@ namespace Stratum {
                                                         .WithDescription("Below you can see repository's releases, for more releases that can't fit in this list you need to type an number of page.")
                                                         .WithFooter(
                                                             footer => footer.Text = "For next page: type number (integer) of page.")
-                                                        .WithColor(Color.Green)
+                                                        .WithColor(Color.Default)
                                                         .WithUrl(gitURL);
             int embedCounter = 0;
             for(int i = 0 + 25 * page; i < releaseCount; i++) {
@@ -203,7 +203,7 @@ namespace Stratum {
                         
             gitClient.Credentials = tokenAuth;
 
-            string[] filterArray = filters.Split("[+]");
+            string[] filterArray = filters.Split("/ +/");
 
             if(filterArray.Length < 2)
                                     return;
@@ -217,7 +217,7 @@ namespace Stratum {
 
             for(int i = 0; i < filterArray.Length; i++) {
 
-                if(filterArray[i].StartsWith(" issuesfilter:")) {
+                if(filterArray[i].StartsWith(" issues-filter:")) {
 
                     filterArray[i]
                             = filterArray[i].Remove(0, 1);
@@ -299,7 +299,7 @@ namespace Stratum {
                                                         
                                                          .WithTitle("Repository's Issues")
                                                          .WithDescription($"All sorted issues count: {issuesArray.Count}. For more information, click on the title hyperlink or type page number (integer).")
-                                                         .WithColor(Color.Green)
+                                                        .WithColor(Color.Default)
                                                          .WithCurrentTimestamp()
                                                          .WithUrl(gitURL);
             
@@ -341,7 +341,7 @@ namespace Stratum {
                         
             gitClient.Credentials = tokenAuth;
 
-            string[] filterArray = filters.Split("[+]");
+            string[] filterArray = filters.Split("/ +/");
 
             DateTime dateChecker = DateTime.Now;
 
@@ -399,7 +399,7 @@ namespace Stratum {
 
                                                         .WithTitle("Repository's Commits")
                                                         .WithDescription($"All sorted (that were found) commits count: {commitArray.Count}. For more information, click on the title hyperlink or type page number (integer).")
-                                                        .WithColor(Color.Green)
+                                                        .WithColor(Color.Default)
                                                         .WithCurrentTimestamp()
                                                         .WithUrl(gitURL);
 
