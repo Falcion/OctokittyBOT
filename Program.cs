@@ -126,7 +126,7 @@ namespace Stratum {
                     EmbedBuilder messageEmbed = new EmbedBuilder()
 
                                                                 .WithTitle("Error")
-                                                                .WithColor(Color.Red)
+                                                                .WithColor(Color.Default)
                                                                 .WithCurrentTimestamp()
                                                                 .AddField("Error:", result.Error)
                                                                 .AddField("Error Reason:", result.ErrorReason);
@@ -134,19 +134,7 @@ namespace Stratum {
                     await commandContext.Channel.SendMessageAsync("", false, messageEmbed.Build()   );
                 }
 
-                else {
-
-                    Console.WriteLine(result);
-
-                    EmbedBuilder messageEmbed = new EmbedBuilder()
-
-                                                                .WithTitle("Command Success")
-                                                                .WithColor(Color.Green)
-                                                                .WithCurrentTimestamp()
-                                                                .AddField("Result: ", result, true);
-
-                    await commandContext.Message.Author.SendMessageAsync("", false, messageEmbed.Build()    );
-                }
+                else Console.WriteLine(result);
             }
         }
 
