@@ -10,7 +10,7 @@ namespace Stratum {
 
         [Command("search-users")]
 
-        public async Task SearchUsers(string gitUser, int page, [Remainder]string filters) {
+        public async Task SearchUsers(int page, [Remainder]string filters) {
 
             string apiToken
                     = Storage.apiToken;
@@ -34,6 +34,8 @@ namespace Stratum {
 
             Language language
                         = Language.Unknown;
+
+            AccountSearchType accountType = AccountSearchType.User;
 
             string location = "none",
                    username = "none",
@@ -125,7 +127,51 @@ namespace Stratum {
 
                     fullname = filterArray[i];
                 }
+
+                if(filterArray[i].StartsWith(" account-type: ")) {
+
+                    filterArray[i]
+                            = filterArray[i].Remove(0, 15);
+
+                    accountType
+                            = new AccounterRequester().AccounterRegister(filterArray[i]);
+                }
             }
+
+            if(username == "none") return;
+
+            SearchUsersRequest usersRequest
+                        = new UseringRequester().UseringRegister(followersCount, creationDate, location, repositories, language, username, email, fullname, accountType);
+
+            SearchUsersResult usersResult
+                        = await gitClient.Search.SearchUsers(usersRequest);
+
+            EmbedBuilder messageEmbed = new EmbedBuilder()
+
+                                                        .WithTitle("Search Users Request - Result")
+                                                        .WithDescription("Current list's count: " + usersResult.TotalCount + ". If you want to see all of users, please type next page's number.")
+                                                        .WithColor(Color.Default)
+                                                        .WithCurrentTimestamp()
+                                                        .WithFooter(
+                                                            footer => footer.Text = "Page: " + page.ToString()
+                                                        );
+
+            if(page > 0) page--;
+            else if(page <= 0) page = 0;
+
+            int algBreaker = 0;
+            for(int i = 0 + 25 * page; i < usersResult.Items.Count; i++) {
+                
+                algBreaker++;
+                if(algBreaker == 25) break;
+
+                string userInfo = "Email: " + usersResult.Items[i].Email + "\nBio: " + usersResult.Items[i].Bio + "\nURL: " + usersResult.Items[i].Url;
+
+                messageEmbed.AddField(usersResult.Items[i].Name, userInfo);
+            }
+
+            await Context.Channel.SendMessageAsync("", false,
+                                                        messageEmbed.Build()    );
         }
     }
 }

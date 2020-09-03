@@ -16,8 +16,8 @@ namespace Stratum {
             string prefix 
                     = Storage.prefix;
 
-            string imgURL 
-                    = "https://github.com/Falcion/Stratum/blob/syntax/.src/icon.png";
+            string imgURL
+                    = Context.Client.CurrentUser.GetAvatarUrl();
 
             EmbedBuilder messageEmbed = new EmbedBuilder()
         
@@ -34,15 +34,15 @@ namespace Stratum {
                                                         .AddField($"``{prefix}repos-issues [repository author] [repository name] [page number] [filters]``", "Shows list of issues in specified repository that sorted by specified filters. For more information check hyperlink in title.")
                                                         .AddField($"``{prefix}repos-commits [repository author] [repository name] [page number] [filters]``", "Shows list of commits in specified repository that sorted by specified filters. For more information check hyperlink in title.")
                                                         .AddField($"``{prefix}repos-core [repository author] [repository name]``", "Shows advanced information about specified repository.")
-                                                        .AddField($"``{prefix}branch-info [repository author] [repository name] [branch name]", "Shows advanced information about specified branch.")
-                                                        .AddField($"``{prefix}release-info [repository author] [repository name] [tag]", "Shows advanced information about specified release.")
-                                                        .AddField($"``{prefix}issue-info [repository author] [repository name] [issue number]", "Shows advanced information about specified issue.")
-                                                        .AddField($"``{prefix}commit-info [repository author] [repository name] [reference]", "Shows advanced information about specified commit.")
-                                                        .AddField($"``{prefix}user-core [username (login)]", "Shows advanced information about user.")
-                                                        .AddField($"``{prefix}organization [username (login)]", "Shows information about organization.")
-                                                        .AddField($"``{prefix}pull-request [repository author] [repository name] [pull request number]", "Shows information about pull request.")
-                                                        .AddField($"``{prefix}gitapi-help", "Shows information about all commands.")
-                                                        .AddField($"``{prefix}gitapi-links", "Shows all specified links of this project.");
+                                                        .AddField($"``{prefix}branch-info [repository author] [repository name] [branch name]``", "Shows advanced information about specified branch.")
+                                                        .AddField($"``{prefix}release-info [repository author] [repository name] [tag]``", "Shows advanced information about specified release.")
+                                                        .AddField($"``{prefix}issue-info [repository author] [repository name] [issue number]``", "Shows advanced information about specified issue.")
+                                                        .AddField($"``{prefix}commit-info [repository author] [repository name] [reference]``", "Shows advanced information about specified commit.")
+                                                        .AddField($"``{prefix}user-core [username (login)]``", "Shows advanced information about user.")
+                                                        .AddField($"``{prefix}organization [username (login)]``", "Shows information about organization.")
+                                                        .AddField($"``{prefix}pull-request [repository author] [repository name] [pull request number]``", "Shows information about pull request.")
+                                                        .AddField($"``{prefix}gitapi-help``", "Shows information about all commands.")
+                                                        .AddField($"``{prefix}gitapi-links``", "Shows all specified links of this project.");
 
             await Context.Channel.SendMessageAsync("", false,
                                                         messageEmbed.Build()    );
@@ -52,8 +52,8 @@ namespace Stratum {
 
         public async Task ApiLinks() {
 
-            string imgURL 
-                    = "https://github.com/Falcion/Stratum/blob/syntax/.src/icon.png";
+            string imgURL
+                    = Context.Client.CurrentUser.GetAvatarUrl();
 
             EmbedBuilder messageEmbed = new EmbedBuilder()
 
