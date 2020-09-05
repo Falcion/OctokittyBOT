@@ -33,7 +33,7 @@ namespace Stratum {
 
             string allowBlock = $"**AllowMergeCommit:** ``{repository.AllowMergeCommit}``\n**AllowRebaseMerge:** ``{repository.AllowRebaseMerge}``\n**AllowSquashMerge:** ``{repository.AllowSquashMerge}``";
             string forkBlock = $"**Is Fork:** ``{repository.Fork}``\n**Forks Count:** ``{repository.ForksCount}``";
-            string otherBlock = $"**Is Archived:** ``{repository.Archived}``\n**Default Branch:** ``{repository.DefaultBranch}``\n**Repository Size:** ``{repository.Size}``";
+            string otherBlock = $"**Is Archived:** ``{repository.Archived}``\n**Default Branch:** ``{repository.DefaultBranch}``\n**Repository Size (bytes):** ``{repository.Size}``";
 
             EmbedBuilder messageEmbed = new EmbedBuilder()
 

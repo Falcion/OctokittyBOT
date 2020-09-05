@@ -13,29 +13,29 @@ public class DateRequester {
         int year = int.Parse(enumArray[2]);
 
         if(month > 12 || month < 1) 
-            return DateRange.GreaterThanOrEquals(new DateTime(2011, 4, 1));
+            return DateRange.GreaterThanOrEquals(new DateTimeOffset(new DateTime(2011, 4, 1)));
 
         if(days > 31 || days < 1) 
-            return DateRange.GreaterThanOrEquals(new DateTime(2011, 4, 1));
+            return DateRange.GreaterThanOrEquals(new DateTimeOffset(new DateTime(2011, 4, 1)));
 
         if(year > DateTime.Now.Year || year < 2011)
-            return DateRange.GreaterThanOrEquals(new DateTime(2011, 4, 1));
+            return DateRange.GreaterThanOrEquals(new DateTimeOffset(new DateTime(2011, 4, 1)));
 
         switch(enumArray[0]) {
 
             case ">>":
-                return DateRange.GreaterThan(new DateTime(year, month, days));
+                return DateRange.GreaterThan(new DateTimeOffset(new DateTime(year, month, days)));
 
             case "<<":
-                return DateRange.LessThan(new DateTime(year, month, days));
+                return DateRange.LessThan(new DateTimeOffset(new DateTime(year, month, days)));
 
             case ">=":
-                return DateRange.GreaterThanOrEquals(new DateTime(year, month, days));
+                return DateRange.GreaterThanOrEquals(new DateTimeOffset(new DateTime(year, month, days)));
 
             case "<=":
-                return DateRange.LessThanOrEquals(new DateTime(year, month, days));
+                return DateRange.LessThanOrEquals(new DateTimeOffset(new DateTime(year, month, days)));
         }       
 
-        return DateRange.GreaterThanOrEquals(new DateTime(2011, 4, 1));
+        return DateRange.GreaterThanOrEquals(new DateTimeOffset(new DateTime(2011, 4, 1)));
     }
 }
