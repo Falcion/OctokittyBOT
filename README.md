@@ -46,7 +46,8 @@ His current potential is restricted by [GitHub API OAuth](https://developer.gith
 | organization | Shows information about organization. | ``organization [username (login)]`` |
 | pull-request | Shows information about pull request. | ``pull-request [repository author] [repository name] [pull request number]`` |
 | user-core | Shows advanced information about user. | ``user-core [username (login)]`` |
-| search-users | Shows list of users that sorted by specified filters. For more information [check this](https://github.com/Falcion/Stratum/blob/syntax/.wikia/SEARCH-USERS.md). | ``search-users [filters]`` |
+| search-users | Shows list of users that sorted by specified filters. For more information [check this](https://github.com/Falcion/Stratum/blob/syntax/.wikia/SEARCH-USERS.md). | ``search-users [page number] [filters]`` |
+| search-repos | Shows list of users that sorted by specified filters. For more information [check this](https://github.com/Falcion/Stratum/blob/syntax/.wikia/SEARCH-REPOS.md) | ``search-repos [page number] [filters]`` |
 
 
 ## License
