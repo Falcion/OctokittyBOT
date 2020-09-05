@@ -43,6 +43,7 @@ namespace Stratum {
                                                         .AddField($"``{prefix}pull-request [repository author] [repository name] [pull request number]``", "Shows information about pull request.")
                                                         .AddField($"``{prefix}search-users [page number] [filters]``", "Shows list of users that sorted by specified filters. For more information check hyperlink in title.")
                                                         .AddField($"``{prefix}search-repos [page number] [filters]``", "Shows list of users that sorted by specified filters. For more information check hyperlink in title.")
+                                                        .AddField($"``{prefix}search-code [page number] [filters]``", "Shows list of files (code) that sorted by specified filters. For more information check hyperlink in title.")
                                                         .AddField($"``{prefix}gitapi-help``", "Shows information about all commands.")
                                                         .AddField($"``{prefix}gitapi-links``", "Shows all specified links of this project.");
 
