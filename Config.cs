@@ -22,7 +22,7 @@ namespace Stratum {
 
                 logModule.Info("Created configuration file! Write GitHub API token and Discord API token in this file.");
 
-                string[] stringArray = new string[] { "authToken = \"\"" + Environment.NewLine + "apiToken = \"\"" + Environment.NewLine + "botPrefix = \"$\"" + Environment.NewLine + "isDebug = \"true\"" };
+                string[] stringArray = new string[] { "authToken = \"\"" + Environment.NewLine + "apiToken = \"\"" + Environment.NewLine + "botPrefix = \"$ \"" + Environment.NewLine + "isDebug = \"true\"" };
 
                 File.WriteAllLines(fileConfig, stringArray);
 
