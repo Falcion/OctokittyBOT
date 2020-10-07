@@ -1,11 +1,13 @@
+using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using Discord;
 using Discord.Commands;
 
 using Octokit;
 
-namespace Stratum.Handler {
+namespace Stratum {
 
     public class CORE : ModuleBase<SocketCommandContext> {
 
@@ -13,6 +15,7 @@ namespace Stratum.Handler {
 
         private Config CONFIG;
         private Logger LOGGER;
+        private Parser PARSER;
 
         [Command("REPOS-INFO")]
 
@@ -175,13 +178,223 @@ namespace Stratum.Handler {
             await Context.Channel.SendMessageAsync("", false, EMBED.Build());
         }
 
-        //TO-DO: REPOS-BRANCHES
+        [Command("REPOS-BRANCHES")]
 
-        //TO-DO: REPOS-RELEASES
+        public async Task REPOSBRANCHES(string AUTHOR, string NAME, int PAGE = 0) {
+            string APITOKEN = CONFIG.getApiToken();
 
-        //TO-DO: REPOS-ISSUES
+            GitHubClient GITCLIENT = new GitHubClient(new ProductHeaderValue("Stratum"));
+            Credentials TOKENAUTH = new Credentials(APITOKEN);
 
-        //TO-DO: REPOS-COMMITS
+            GITCLIENT.Credentials = TOKENAUTH;
+
+            string GITURL = "https://github.com/" + AUTHOR + NAME + "/branches/";
+
+            IReadOnlyList<Branch> BRANCHLIST = await GITCLIENT.Repository.Branch.GetAll(AUTHOR, NAME);
+
+            EmbedBuilder EMBED = new EmbedBuilder();
+
+            EMBED.WithTitle("__P82_AA8C__")
+                 .WithColor(DEFAULT)
+                 .WithUrl(GITURL)
+                 .WithFooter(FOOTER => FOOTER.Text = "PAGE: " + $"{PAGE}");
+
+            if(PAGE > 0) PAGE--;
+            if(PAGE < 0) PAGE = 0;
+
+            uint ENCOUNTER = 0; 
+
+            for(int i = 0 + 25 * PAGE; i < BRANCHLIST.Count; i++) {
+                Branch BRANCH = BRANCHLIST[i];
+
+                ENCOUNTER++;
+                if(ENCOUNTER > 25) break;
+
+                EMBED.AddField("BRANCH:", "NAME:" + BRANCH.Name + "\n" + "PROTECTED:" + BRANCH.Protected);
+            }
+
+            await Context.Channel.SendMessageAsync("", false, EMBED.Build());
+        }
+
+        [Command("REPOS-RELEASES")]
+
+        public async Task REPOSRELEASES(string AUTHOR, string NAME, int PAGE = 0) {
+            string APITOKEN = CONFIG.getApiToken();
+
+            GitHubClient GITCLIENT = new GitHubClient(new ProductHeaderValue("Stratum"));
+            Credentials TOKENAUTH = new Credentials(APITOKEN);
+
+            GITCLIENT.Credentials = TOKENAUTH;
+
+            string GITURL = "https://github.com/" + AUTHOR + NAME + "/releases/";
+
+            IReadOnlyList<Release> RELEASELIST = await GITCLIENT.Repository.Release.GetAll(AUTHOR, NAME);
+
+            EmbedBuilder EMBED = new EmbedBuilder();
+
+            EMBED.WithTitle("__P82_D09Q_1")
+                 .WithColor(DEFAULT)
+                 .WithUrl(GITURL)
+                 .WithFooter(FOOTER => FOOTER.Text = "PAGE: " + $"{PAGE}");
+
+            if(PAGE > 0) PAGE--;
+            if(PAGE < 0) PAGE = 0;
+
+            uint ENCOUNTER = 0; 
+
+            for(int i = 0 + 25 * PAGE; i < RELEASELIST.Count; i++) {
+                Release RELEASE = RELEASELIST[i];
+
+                ENCOUNTER++;
+                if(ENCOUNTER > 25) break;
+
+                EMBED.AddField("RELEASE: " + RELEASE.Name, "AUTHOR: " + RELEASE.Author.Login + "\n" + "URL: " + RELEASE.Url + "\n" + "TAG:" + RELEASE.TagName);
+            }
+
+            await Context.Channel.SendMessageAsync("", false, EMBED.Build());
+        }
+
+        [Command("REPOS-ISSUES")]
+
+        public async Task REPOSISSUES(string AUTHOR, string NAME, int PAGE = 0,[Remainder]string FILTERS = "") {
+            string APITOKEN = CONFIG.getApiToken();
+
+            GitHubClient GITCLIENT = new GitHubClient(new ProductHeaderValue("Stratum"));
+            Credentials TOKENAUTH = new Credentials(APITOKEN);
+
+            GITCLIENT.Credentials = TOKENAUTH;
+
+            string GITURL = "https://github.com/" + AUTHOR + NAME + "/issues/";
+
+            string[] FILTERARRAY = FILTERS.Split('|');
+
+            IssueFilter ISSUEFILTER = IssueFilter.All;
+
+            string ISSUECREATOR = "NONE";
+            string ISSUEMENTIONED = "NONE";
+            string ISSUEASSIGNEE = "NONE";
+            string ISSUEMILESTONE = "NONE";
+
+            EmbedBuilder EMBED = new EmbedBuilder();
+
+            EMBED.WithTitle("__4PQ9_C8_")
+                 .WithColor(DEFAULT)
+                 .WithUrl(GITURL)
+                 .WithFooter(FOOTER => FOOTER.Text = "PAGE: " + $"{PAGE}");
+
+            for(int i = 0; i < FILTERARRAY.Length; i++) {
+
+                if(FILTERARRAY[i].StartsWith(" ISSUESFILTER: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 15);
+
+                    ISSUEFILTER = PARSER.ISSUEFILTER(FILTERARRAY[i]);
+                }
+
+                if(FILTERARRAY[i].StartsWith(" CREATOR: ")) ISSUECREATOR = FILTERARRAY[i].Remove(0, 10);
+                if(FILTERARRAY[i].StartsWith(" MENTIONED: ")) ISSUEMENTIONED = FILTERARRAY[i].Remove(0, 12);
+                if(FILTERARRAY[i].StartsWith(" ASSIGNEE: ")) ISSUEASSIGNEE = FILTERARRAY[i].Remove(0, 11);
+                if(FILTERARRAY[i].StartsWith(" MILESTONE: ")) ISSUEMILESTONE = FILTERARRAY[i].Remove(0, 12);
+
+            }
+
+            RepositoryIssueRequest ISSUEREQUEST;
+
+            ISSUEREQUEST = PARSER.ISSUEREQUEST(ISSUEFILTER, ISSUECREATOR, ISSUEMENTIONED, ISSUEASSIGNEE, ISSUEMILESTONE);
+
+            IReadOnlyList<Issue> ISSUESLIST = await GITCLIENT.Issue.GetAllForRepository(AUTHOR, NAME, ISSUEREQUEST);
+
+            if(PAGE > 0) PAGE--;
+            if(PAGE < 0) PAGE = 0;
+
+            uint ENCOUNTER = 0;
+
+            for(int i = 0 + 25 * PAGE; i < ISSUESLIST.Count; i++) {
+
+                Issue ISSUE = ISSUESLIST[i];
+
+                ENCOUNTER++;
+                if(ENCOUNTER > 25) break;
+
+                EMBED.AddField("ISSUE: " + ISSUE.Title, "AUTHOR: " + ISSUE.User.Login + "\n" + "URL: " + ISSUE.Url + "\n" + "STATE: " + ISSUE.State);
+            }
+
+            await Context.Channel.SendMessageAsync("", false, EMBED.Build());
+        }
+
+        [Command("REPOS-COMMITS")]
+
+        public async Task REPOSCOMMITS(string AUTHOR, string NAME, int PAGE = 0, [Remainder]string FILTERS = "") {
+            string APITOKEN = CONFIG.getApiToken();
+
+            GitHubClient GITCLIENT = new GitHubClient(new ProductHeaderValue("Stratum"));
+            Credentials TOKENAUTH = new Credentials(APITOKEN);
+
+            GITCLIENT.Credentials = TOKENAUTH;
+
+            string GITURL = "https://github.com/" + AUTHOR + NAME + "/commits/";
+
+            string[] FILTERARRAY = FILTERS.Split('|');
+
+            DateTime DATECHECKER = DateTime.Now;
+
+            DateTime UNTILDATE = DATECHECKER;
+            DateTime SINCEDATE = DATECHECKER;
+
+            string COMMITAUTHOR = "NONE";
+            string PATH = "NONE";
+            string SHA = "NONE";
+
+            for(int i = 0; i < FILTERARRAY[i].Length; i++) {
+
+                if(FILTERARRAY[i].StartsWith(" UNTIL: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 8);
+
+                    UNTILDATE = DateTime.Parse(FILTERARRAY[i]);
+                }
+
+                if(FILTERARRAY[i].StartsWith(" SINCE: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 8);
+
+                    SINCEDATE = DateTime.Parse(FILTERARRAY[i]);
+                }
+
+                if(FILTERARRAY[i].StartsWith(" AUTHOR: ")) COMMITAUTHOR = FILTERARRAY[i].Remove(0, 9);
+                if(FILTERARRAY[i].StartsWith(" PATH: ")) PATH = FILTERARRAY[i].Remove(0, 7);
+                if(FILTERARRAY[i].StartsWith(" SHA: ")) SHA = FILTERARRAY[i].Remove(0, 6);
+            }
+
+
+            CommitRequest COMMITREQUEST = PARSER.COMMITREQUEST(DATECHECKER, UNTILDATE, SINCEDATE, COMMITAUTHOR, PATH, SHA, new string[] { AUTHOR, NAME });
+
+            IReadOnlyList<GitHubCommit> COMMITLIST = await GITCLIENT.Repository.Commit.GetAll(AUTHOR, NAME, COMMITREQUEST);
+
+            EmbedBuilder EMBED = new EmbedBuilder();
+
+            EMBED.WithTitle("_8PQ_C6__")
+                 .WithColor(DEFAULT)
+                 .WithUrl(GITURL)
+                 .WithFooter(FOOTER => FOOTER.Text = "PAGE: " + $"{PAGE}");
+
+            if(PAGE > 0) PAGE--;
+            if(PAGE < 0) PAGE = 0;
+
+            uint ENCOUNTER = 0;
+
+            for(int i = 0 + 25 * PAGE; i < COMMITLIST.Count; i++) {
+
+                GitHubCommit COMMIT = COMMITLIST[i];
+
+                ENCOUNTER++;
+                if(ENCOUNTER > 25) break;
+
+                EMBED.AddField("COMMIT: " + COMMIT.NodeId, "SHA: " + COMMIT.Sha + "\n" + "TOTAL: " + COMMIT.Stats.Total);
+            }
+
+            await Context.Channel.SendMessageAsync("", false, EMBED.Build());
+        }
 
         //TO-DO: SEARCH-USERS
 
