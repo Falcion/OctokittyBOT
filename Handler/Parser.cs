@@ -807,5 +807,206 @@ namespace Stratum {
                 }
             }
         }
+
+        public ForkQualifier FORKQUALIFIER(string ENUMERABLE) {
+
+            switch(ENUMERABLE) {
+
+                case "TRUE": return ForkQualifier.OnlyForks;
+                case "FALSE": return ForkQualifier.IncludeForks;
+            }
+
+            return ForkQualifier.IncludeForks;
+        }
+
+        public DateRange DATEBETWEEN(string STRING) {
+
+            DateTimeOffset DEFAULT = new DateTimeOffset(new DateTime(1999, 4, 1));
+            DateRange DATERANGE = DateRange.Between(DEFAULT, DateTime.Now);
+
+            string[] UPDATEARRAY = STRING.Split(' ');
+
+            string[] FIRSTDATE = UPDATEARRAY[0].Split('/');
+            string[] AFTERDATE = UPDATEARRAY[1].Split('/');
+
+            int FIRSTMONTH = int.Parse(FIRSTDATE[0]);
+            int FIRSTDAYS = int.Parse(FIRSTDATE[1]);
+            int FIRSTYEAR = int.Parse(FIRSTDATE[2]);
+
+            int AFTERMONTH = int.Parse(AFTERDATE[0]);
+            int AFTERDAYS = int.Parse(AFTERDATE[1]);
+            int AFTERYEAR = int.Parse(AFTERDATE[2]);
+
+            if(FIRSTMONTH > 12 || FIRSTMONTH < 1) return DATERANGE;
+            if(FIRSTDAYS > 31 || FIRSTDAYS < 1) return DATERANGE;
+            if(FIRSTYEAR > DateTime.Now.Year || FIRSTYEAR < 1999) return DATERANGE;
+
+            if(AFTERMONTH > 12 || AFTERMONTH < 1) return DATERANGE;
+            if(AFTERDAYS > 31 || AFTERDAYS < 1) return DATERANGE;
+            if(AFTERYEAR > DateTime.Now.Year || AFTERYEAR < 1999) return DATERANGE;
+
+            DateTimeOffset FIRSTOFFSET = new DateTimeOffset(new DateTime(FIRSTYEAR, FIRSTMONTH, FIRSTDAYS));
+            DateTimeOffset AFTEROFFSET = new DateTimeOffset(new DateTime(AFTERYEAR, AFTERMONTH, AFTERDAYS));
+
+            return DateRange.Between(FIRSTOFFSET, AFTEROFFSET);
+        }
+
+        public SearchRepositoriesRequest REPOSITORIESREQUEST(Octokit.Range STARS, Octokit.Range SIZE, Octokit.Range FORKS, ForkQualifier INCLUDEFORKS, Language LANGUAGE, DateTime DATECHECKER, DateRange CREATIONDATE, DateRange UPDATEDATE, string NAME, string OWNER, bool README, bool DESC) {
+
+            if(README != false) {
+
+                if(DESC != false) {
+
+                    if(OWNER != "NONE") {
+                        
+                        return new SearchRepositoriesRequest(NAME) {
+
+                            Stars = STARS,
+                            Size = SIZE,
+                            Forks = FORKS,
+                            Fork = INCLUDEFORKS,
+                            Language = LANGUAGE,
+
+                            In = new[] { InQualifier.Readme, InQualifier.Description, InQualifier.Name },
+
+                            Created = CREATIONDATE,
+                            Updated = UPDATEDATE,
+
+                            User = OWNER,
+                        };
+
+                    } else {
+
+                        return new SearchRepositoriesRequest(NAME) {
+
+                            Stars = STARS,
+                            Size = SIZE,
+                            Forks = FORKS,
+                            Fork = INCLUDEFORKS,
+                            Language = LANGUAGE,
+
+                            In = new[] { InQualifier.Readme, InQualifier.Description, InQualifier.Name },
+
+                            Created = CREATIONDATE,
+                            Updated = UPDATEDATE,
+                        };
+                    }
+
+                } else {
+
+                    if(OWNER != "NONE") {
+                        
+                        return new SearchRepositoriesRequest(NAME) {
+
+                            Stars = STARS,
+                            Size = SIZE,
+                            Forks = FORKS,
+                            Fork = INCLUDEFORKS,
+                            Language = LANGUAGE,
+
+                            In = new[] { InQualifier.Readme, InQualifier.Name },
+
+                            Created = CREATIONDATE,
+                            Updated = UPDATEDATE,
+
+                            User = OWNER,
+                        };
+
+                    } else {
+
+                        return new SearchRepositoriesRequest(NAME) {
+
+                            Stars = STARS,
+                            Size = SIZE,
+                            Forks = FORKS,
+                            Fork = INCLUDEFORKS,
+                            Language = LANGUAGE,
+
+                            In = new[] { InQualifier.Readme, InQualifier.Name },
+
+                            Created = CREATIONDATE,
+                            Updated = UPDATEDATE,
+                        };
+                    }
+                }
+
+            } else {
+
+                if(DESC != false) {
+
+                    if(OWNER != "NONE") {
+                        
+                        return new SearchRepositoriesRequest(NAME) {
+
+                            Stars = STARS,
+                            Size = SIZE,
+                            Forks = FORKS,
+                            Fork = INCLUDEFORKS,
+                            Language = LANGUAGE,
+
+                            In = new[] { InQualifier.Description, InQualifier.Name },
+
+                            Created = CREATIONDATE,
+                            Updated = UPDATEDATE,
+
+                            User = OWNER,
+                        };
+
+                    } else {
+
+                        return new SearchRepositoriesRequest(NAME) {
+
+                            Stars = STARS,
+                            Size = SIZE,
+                            Forks = FORKS,
+                            Fork = INCLUDEFORKS,
+                            Language = LANGUAGE,
+
+                            In = new[] { InQualifier.Description, InQualifier.Name },
+
+                            Created = CREATIONDATE,
+                            Updated = UPDATEDATE,
+                        };
+                    }
+
+                } else {
+
+                    if(OWNER != "NONE") {
+                        
+                        return new SearchRepositoriesRequest(NAME) {
+
+                            Stars = STARS,
+                            Size = SIZE,
+                            Forks = FORKS,
+                            Fork = INCLUDEFORKS,
+                            Language = LANGUAGE,
+
+                            In = new[] { InQualifier.Name },
+
+                            Created = CREATIONDATE,
+                            Updated = UPDATEDATE,
+
+                            User = OWNER,
+                        };
+
+                    } else {
+
+                        return new SearchRepositoriesRequest(NAME) {
+
+                            Stars = STARS,
+                            Size = SIZE,
+                            Forks = FORKS,
+                            Fork = INCLUDEFORKS,
+                            Language = LANGUAGE,
+
+                            In = new[] { InQualifier.Name },
+
+                            Created = CREATIONDATE,
+                            Updated = UPDATEDATE,
+                        };
+                    }
+                }
+            }
+        }
     }
 }

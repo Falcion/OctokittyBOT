@@ -519,7 +519,149 @@ namespace Stratum {
             await Context.Channel.SendMessageAsync("", false, EMBED.Build());
         }
 
-        //TO-DO: SEARCH-REPOS
+        [Command("SEARCH-REPOS")]
+
+        public async Task SEARCHREPOS(int PAGE = 0, [Remainder]string FILTERS = "") {
+            string APITOKEN = CONFIG.getApiToken();
+
+            GitHubClient GITCLIENT = new GitHubClient(new ProductHeaderValue("Stratum"));
+            Credentials TOKENAUTH = new Credentials(APITOKEN);
+
+            GITCLIENT.Credentials = TOKENAUTH;
+
+            string[] FILTERARRAY = FILTERS.Split('⇒');
+
+            Octokit.Range STARS = Octokit.Range.GreaterThanOrEquals(0);
+            Octokit.Range SIZE = Octokit.Range.GreaterThan(0);
+            Octokit.Range FORKS = Octokit.Range.GreaterThanOrEquals(0);
+
+            ForkQualifier INCLUDEFORKS = ForkQualifier.IncludeForks;
+
+            Language LANGUAGE = Language.Unknown;
+
+            DateTime DATECHECKER = DateTime.Now;
+
+            DateRange CREATIONDATE = DateRange.GreaterThanOrEquals(new DateTimeOffset(new DateTime(1999, 4, 1)));
+            DateRange UPDATEDATE = DateRange.Between(new DateTimeOffset(new DateTime(1999, 4, 1)), DATECHECKER);
+
+            string NAME = "NONE";
+            string OWNER = "NONE";
+
+            bool README = true;
+            bool DESC = true;
+
+            for(int i = 0; i < FILTERARRAY[i].Length; i++) {
+
+                if(FILTERARRAY[i].StartsWith(" STARS: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 8);
+
+                    string[] REQUESTARRAY = FILTERARRAY[i].Split(' ');
+
+                    STARS = PARSER.RANGE(REQUESTARRAY);
+                }
+
+                if(FILTERARRAY[i].StartsWith(" SIZE: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 7);
+
+                    string[] REQUESTARRAY = FILTERARRAY[i].Split(' ');
+
+                    SIZE = PARSER.RANGE(REQUESTARRAY);
+                }
+
+                if(FILTERARRAY[i].StartsWith(" FORKS: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 7);
+
+                    string[] REQUESTARRAY = FILTERARRAY[i].Split(' ');
+
+                    FORKS = PARSER.RANGE(REQUESTARRAY);
+                }
+
+                if(FILTERARRAY[i].StartsWith(" ONLYFORKS: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 12);
+
+                    INCLUDEFORKS = PARSER.FORKQUALIFIER(FILTERARRAY[i]);
+                }
+
+                if(FILTERARRAY[i].StartsWith(" LANGUAGE: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 11);
+
+                    LANGUAGE = PARSER.LANGUAGE(FILTERARRAY[i]);
+                }
+
+                if(FILTERARRAY[i].StartsWith(" CREATIONDATE: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 15);
+
+                    CREATIONDATE = PARSER.DATERANGE(FILTERARRAY[i]);
+                }
+
+                if(FILTERARRAY[i].StartsWith(" UPDATEDATE: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 13);
+
+                    UPDATEDATE = PARSER.DATEBETWEEN(FILTERARRAY[i]);
+                }
+
+                if(FILTERARRAY[i].StartsWith(" NAME: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 7);
+
+                    NAME = FILTERARRAY[i];
+                }
+
+                if(FILTERARRAY[i].StartsWith(" OWNER: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 8);
+
+                    OWNER = FILTERARRAY[i];
+                }
+
+                if(FILTERARRAY[i].StartsWith(" README: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 9);
+
+                    README = bool.Parse(FILTERARRAY[i]);
+                }
+
+                if(FILTERARRAY[i].StartsWith(" DESC: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 7);
+
+                    DESC = bool.Parse(FILTERARRAY[i]);
+                }
+            }
+
+            SearchRepositoriesRequest REPOSITORIESREQUEST = PARSER.REPOSITORIESREQUEST(STARS, SIZE, FORKS, INCLUDEFORKS, LANGUAGE, DATECHECKER, CREATIONDATE, UPDATEDATE, NAME, OWNER, README, DESC);
+
+            SearchRepositoryResult REPOSITORYRESULT = await GITCLIENT.Search.SearchRepo(REPOSITORIESREQUEST);
+
+            EmbedBuilder EMBED = new EmbedBuilder();
+
+            EMBED.WithTitle("_5DQ_C80__")
+                 .WithColor(DEFAULT)
+                 .WithFooter(FOOTER => FOOTER.Text = "PAGE: " + PAGE);
+
+            if(PAGE > 0) PAGE--;
+            if(PAGE < 0) PAGE = 0;
+
+            uint ENCOUNTER = 0;
+            for(int i = 0 + 25 * PAGE; i < REPOSITORYRESULT.Items.Count; i++) {
+
+                Repository REPOSITORY = REPOSITORYRESULT.Items[i];
+
+                ENCOUNTER++;
+                if(ENCOUNTER > 25) break;
+
+                EMBED.AddField("REPOSITORY: " + REPOSITORY.FullName, "OWNER: " + REPOSITORY.Owner + "\n" + "ID: " + REPOSITORY.Id + "\n" + "URL: " + REPOSITORY.Url);
+            }
+
+            await Context.Channel.SendMessageAsync("", false, EMBED.Build());
+        }
 
         //TO-DO: SEARCH-CODE
 
