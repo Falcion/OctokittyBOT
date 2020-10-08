@@ -4,6 +4,9 @@
 README.md export-ignore
 LICENSE export-ignore
 
+# Ignore specified documentation
+Documentation/ export-ignore
+
 # Text Qualifier
 * text=auto
 
