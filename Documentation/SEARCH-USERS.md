@@ -12,7 +12,7 @@ Special symbol-separator for all filters (need to be typed before first filter a
 | Username | ``USERNAME: string`` | This type of filter checking user's nickname (username). | ``USERNAME: Falcion`` |
 | Email | ``EMAIL: string`` | This type of filter checking user's email (public). | ``EMAIL: example@gmail.com`` |
 | Fullname | ``FULLNAME: string`` | This type of filter checking user's fullname. | ``FULLNAME: Falcion`` |
-| Account Type | ``USERTYPE: string`` | This type of filter checking account's type. | ``USERTYPE: bot`` |
+| Account Type | ``USERTYPE: string`` | This type of filter checking account's type. | ``USERTYPE: ORG`` |
 
 ### Account Dictionary:
 
