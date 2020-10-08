@@ -663,7 +663,168 @@ namespace Stratum {
             await Context.Channel.SendMessageAsync("", false, EMBED.Build());
         }
 
-        //TO-DO: SEARCH-CODE
+        [Command("SEARCH-CODE")]
+
+        public async Task SEARCHCODE(int PAGE = 0, [Remainder]string FILTERS = "") {
+            string APITOKEN = CONFIG.getApiToken();
+
+            GitHubClient GITCLIENT = new GitHubClient(new ProductHeaderValue("Stratum"));
+            Credentials TOKENAUTH = new Credentials(APITOKEN);
+
+            GITCLIENT.Credentials = TOKENAUTH;
+
+            string[] FILTERARRAY = FILTERS.Split('⇒');
+
+            string FILENAME = "NONE";
+            string PATH = "NONE";
+            string USER = "NONE";
+
+            string AUTHOR = "NONE";
+            string NAME = "NONE";
+
+            Language LANGUAGE = Language.Unknown;
+
+            bool FORKS = false;
+
+            Octokit.Range SIZE = Octokit.Range.GreaterThan(0);
+
+            for(int i = 0 + 25 * PAGE; i < FILTERARRAY[i].Length; i++) {
+
+                if(FILTERARRAY[i].StartsWith(" FILENAME: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 11);
+
+                    FILENAME = FILTERARRAY[i];
+                }
+
+                if(FILTERARRAY[i].StartsWith(" PATH: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 7);
+
+                    PATH = FILTERARRAY[i];
+                }
+
+                if(FILTERARRAY[i].StartsWith(" AUTHOR: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 9);
+
+                    AUTHOR = FILTERARRAY[i];
+                }
+
+                if(FILTERARRAY[i].StartsWith(" NAME: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 7);
+
+                    NAME = FILTERARRAY[i];
+                }
+
+                if(FILTERARRAY[i].StartsWith(" USER: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 7);
+
+                    USER = FILTERARRAY[i];
+                }
+
+                if(FILTERARRAY[i].StartsWith(" LANGUAGE: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 11);
+
+                    LANGUAGE = PARSER.LANGUAGE(FILTERARRAY[i]);
+                }
+
+                if(FILTERARRAY[i].StartsWith(" FORKS: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 8);
+
+                    FORKS = bool.Parse(FILTERARRAY[i]);
+                }
+
+                if(FILTERARRAY[i].StartsWith(" SIZE: ")) {
+
+                    FILTERARRAY[i] = FILTERARRAY[i].Remove(0, 7);
+
+                    string[] REQUESTARRAY = FILTERARRAY[i].Split(' ');
+
+                    SIZE = PARSER.RANGE(REQUESTARRAY);
+                }
+            }
+
+            if(AUTHOR == "NONE" || NAME == "NONE") return;
+
+            SearchCodeRequest CODEREQUEST = PARSER.CODEREQUEST(FILENAME, PATH, LANGUAGE, FORKS, SIZE, USER, AUTHOR, NAME);
+
+            SearchCodeResult CODERESULT = await GITCLIENT.Search.SearchCode(CODEREQUEST);
+
+            EmbedBuilder EMBED = new EmbedBuilder();
+
+            EMBED.WithTitle("_CC8_6DT1__")
+                 .WithColor(DEFAULT)
+                 .WithFooter(FOOTER => FOOTER.Text = "PAGE: " + PAGE);
+
+            if(PAGE > 0) PAGE--;
+            if(PAGE < 0) PAGE = 0;
+
+            uint ENCOUNTER = 0;
+            for(int i = 0 + 25 * PAGE; i < CODERESULT.Items.Count; i++) {
+
+                SearchCode CODE = CODERESULT.Items[i];
+
+                ENCOUNTER++;
+                if(ENCOUNTER > 25) break;
+
+                EMBED.AddField("CODE: " + CODE.Name, "SHA: " + CODE.Sha + "\n" + "PATH: " + CODE.Path + "\n" + "URL: " + CODE.Url);
+            }
+
+            await Context.Channel.SendMessageAsync("", false, EMBED.Build());
+        }
+
+        [Command("ORGANIZATION")]
+
+        public async Task ORGANIZATION(string NAME) {
+            string APITOKEN = CONFIG.getApiToken();
+
+            GitHubClient GITCLIENT = new GitHubClient(new ProductHeaderValue("Stratum"));
+            Credentials TOKENAUTH = new Credentials(APITOKEN);
+
+            GITCLIENT.Credentials = TOKENAUTH;
+
+            Organization ORGANIZATION = await GITCLIENT.Organization.Get(NAME);
+
+            EmbedBuilder EMBED = new EmbedBuilder();
+
+            EMBED.WithTitle(ORGANIZATION.Name)
+                 .WithColor(DEFAULT)
+                 .WithImageUrl(ORGANIZATION.AvatarUrl)
+                 .WithUrl(ORGANIZATION.Url)
+                 .AddField("LOCATION:", ORGANIZATION.Location)
+                 .AddField("EMAIL:", ORGANIZATION.Email)
+                 .AddField("BILLING:", ORGANIZATION.BillingAddress);
+
+            await Context.Channel.SendMessageAsync("", false, EMBED.Build());
+        }
+
+        [Command("PULL-REQUEST")]
+
+        public async Task PULLREQUEST(string AUTHOR, string NAME, int NUMBER) {
+            string APITOKEN = CONFIG.getApiToken();
+
+            GitHubClient GITCLIENT = new GitHubClient(new ProductHeaderValue("Stratum"));
+            Credentials TOKENAUTH = new Credentials(APITOKEN);
+
+            GITCLIENT.Credentials = TOKENAUTH;
+
+            PullRequest PULLREQUEST = await GITCLIENT.PullRequest.Get(AUTHOR, NAME, NUMBER);
+
+            EmbedBuilder EMBED = new EmbedBuilder();
+
+            EMBED.WithTitle(PULLREQUEST.Title)
+                 .WithColor(DEFAULT)
+                 .AddField("DRAFT:", PULLREQUEST.Draft)
+                 .AddField("STATE:", PULLREQUEST.State.Value)
+                 .AddField("TOTAL:", PULLREQUEST.ChangedFiles);
+
+            await Context.Channel.SendMessageAsync("", false, EMBED.Build());
+        }
 
         //IN OTHER CLASS: GIT-API LIMIT COMMAND
         //IN OTHER CLASS: HELP COMMAND

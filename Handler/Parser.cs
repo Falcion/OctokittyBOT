@@ -1008,5 +1008,67 @@ namespace Stratum {
                 }
             }
         }
+
+        public SearchCodeRequest CODEREQUEST(string FILENAME, string PATH, Language LANGUAGE, bool FORKS, Octokit.Range SIZE, string USER, string AUTHOR, string NAME) {
+
+            if(FILENAME != "NONE") {
+
+                if(PATH != "NONE") {
+
+                    return new SearchCodeRequest("auth", AUTHOR, NAME) {
+
+                        In = new[] { CodeInQualifier.File, CodeInQualifier.Path },
+                            
+                        Language = LANGUAGE,
+                        Forks = FORKS,
+                        Size = SIZE,
+                        Path = PATH,
+                        FileName = FILENAME,
+                        User = USER,
+                    };
+
+                } else {
+
+                    return new SearchCodeRequest("auth", AUTHOR, NAME) {
+
+                        In = new[] { CodeInQualifier.File },
+                            
+                        Language = LANGUAGE,
+                        Forks = FORKS,
+                        Size = SIZE,
+                        FileName = FILENAME,
+                        User = USER,
+                    };
+                }
+
+            } else {
+
+                if(PATH != "NONE") {
+
+                    return new SearchCodeRequest("auth", AUTHOR, NAME) {
+
+                        In = new[] { CodeInQualifier.File, CodeInQualifier.Path },
+                            
+                        Language = LANGUAGE,
+                        Forks = FORKS,
+                        Size = SIZE,
+                        Path = PATH,
+                        User = USER,
+                    };
+
+                } else {
+
+                    return new SearchCodeRequest("auth", AUTHOR, NAME) {
+
+                        In = new[] { CodeInQualifier.File },
+                            
+                        Language = LANGUAGE,
+                        Forks = FORKS,
+                        Size = SIZE,
+                        User = USER,
+                    };
+                }
+            }
+        }
     }
 }
