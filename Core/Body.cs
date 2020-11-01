@@ -238,6 +238,11 @@ namespace Stratum.Core
                  .WithColor(Color.Blue)
                  .WithFooter(footer => footer.Text = $"Page: {page}");
 
+            /*
+                Fixing page counter, so user can type 1 or 0 and that will be equals as 0.
+                In other words, we transfer the usual number system to the number system of arrays.
+             */
+
             if (page > 0) page--;
             if (page < 0) page = 0;
 
@@ -245,6 +250,11 @@ namespace Stratum.Core
 
             for (int i = 0 + 25 * page; i < branches.Count; i++)
             {
+                /*
+                    Discord API doesn't allow you to create EmbedMessage with more than 25 fields.
+                    See https://discord.com/developers/docs/resources/channel#embed-limits-limits
+                 */
+
                 encounter++;
                 if (encounter == 25) break;
 
@@ -279,6 +289,11 @@ namespace Stratum.Core
                  .WithColor(Color.Blue)
                  .WithFooter(footer => footer.Text = $"Page: {page}");
 
+            /*
+                Fixing page counter, so user can type 1 or 0 and that will be equals as 0.
+                In other words, we transfer the usual number system to the number system of arrays.
+             */
+
             if (page > 0) page--;
             if (page < 0) page = 0;
 
@@ -286,6 +301,12 @@ namespace Stratum.Core
 
             for (int i = 0 + 25 * page; i < releases.Count; i++)
             {
+
+                /*
+                    Discord API doesn't allow you to create EmbedMessage with more than 25 fields.
+                    See https://discord.com/developers/docs/resources/channel#embed-limits-limits
+                 */
+
                 encounter++;
                 if (encounter == 25) break;
 
