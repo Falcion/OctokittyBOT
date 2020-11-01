@@ -8,6 +8,7 @@ using Discord.Commands;
 using Octokit;
 
 using Stratum.Body;
+using Stratum.Body.Request;
 
 namespace Stratum.Core
 {
@@ -55,14 +56,14 @@ namespace Stratum.Core
 
             filterArray[0].Insert(0, " ");
 
-            IssueFilter issueFilter = new IssueFilter();
+            IssueFilter IssueFilter = new IssueFilter();
 
             /*
                 An array of Issue parameters for the next call to the GitHub API.
                 In the appropriate order: issue's creator, issue's mentioned, issue's assignee, issue's milestone.
              */
 
-            string[] issueParams = new string[] { "none", "none", "none", "none" };
+            string[] IssueParams = new string[] { "none", "none", "none", "none" };
 
             for(int i = 0; i < filterArray.Length; i++)
             {
@@ -75,27 +76,27 @@ namespace Stratum.Core
                 {
                     filterArray[i] = filterArray[i].Remove(0, 16);
 
-                    issueFilter = Parser.getIssueFilter(filterArray[i]);
+                    IssueFilter = FilterIssue.getIssueFilter(filterArray[i]);
                 }
 
                 /* Processing of simple elements. */
 
                 if (filterArray[i].StartsWith(" creator: ")) 
-                    issueParams[0] = filterArray[i].Remove(0, 10);
+                    IssueParams[0] = filterArray[i].Remove(0, 10);
 
                 if (filterArray[i].StartsWith(" mentioned: ")) 
-                    issueParams[1] = filterArray[i].Remove(0, 12);
+                    IssueParams[1] = filterArray[i].Remove(0, 12);
 
                 if (filterArray[i].StartsWith(" assignee: ")) 
-                    issueParams[2] = filterArray[i].Remove(0, 11);
+                    IssueParams[2] = filterArray[i].Remove(0, 11);
 
                 if (filterArray[i].StartsWith(" milestone: ")) 
-                    issueParams[3] = filterArray[i].Remove(0, 12);
+                    IssueParams[3] = filterArray[i].Remove(0, 12);
             }
 
             /* Calling (parsing) RepositoryIssueRequest from special class. */
 
-            RepositoryIssueRequest issueRequest = Stratum.Body.Context.getIssueRequest(issueFilter, issueParams);
+            RepositoryIssueRequest issueRequest = RequestIssue.getIssueRequest(IssueFilter, IssueParams[0], IssueParams[1], IssueParams[2], IssueParams[3]);
 
             EmbedBuilder embed = new EmbedBuilder();
 
@@ -173,14 +174,14 @@ namespace Stratum.Core
                 In the appropriate order: until date, since date.
              */
 
-            DateTime[] dateParams = new DateTime[] { DateTime.Now, new DateTime(1999, 10, 1) };
+            DateTime[] DateParams = new DateTime[] { DateTime.Now, new DateTime(1999, 10, 1) };
 
             /*
                 An array of Commit parameters for the next call to the GitHub API.
                 In the appropriate order: commit's author, commit's path, commit's SHA.
              */
 
-            string[] commitParams = new string[] { "none", "none", "none" };
+            string[] CommitParams = new string[] { "none", "none", "none" };
 
             for(int i = 0; i < filterArray.Length; i++)
             {
@@ -193,31 +194,31 @@ namespace Stratum.Core
                 {
                     filterArray[i] = filterArray[i].Remove(0, 8);
 
-                    dateParams[1] = Parser.getDate(filterArray[i]);
+                    DateParams[1] = DateTime.Parse(filterArray[i]);
                 }
 
                 if (filterArray[i].StartsWith(" since: "))
                 {
                     filterArray[i] = filterArray[i].Remove(0, 8);
 
-                    dateParams[2] = Parser.getDate(filterArray[i]);
+                    DateParams[2] = DateTime.Parse(filterArray[i]);
                 }
 
                 /* Processing of simple elements. */
 
                 if (filterArray[i].StartsWith(" author: "))
-                    commitParams[0] = filterArray[i].Remove(0, 9);
+                    CommitParams[0] = filterArray[i].Remove(0, 9);
 
                 if (filterArray[i].StartsWith(" path: "))
-                    commitParams[1] = filterArray[i].Remove(0, 7);
+                    CommitParams[1] = filterArray[i].Remove(0, 7);
 
                 if (filterArray[i].StartsWith(" sha: "))
-                    commitParams[2] = filterArray[i].Remove(0, 6);
+                    CommitParams[2] = filterArray[i].Remove(0, 6);
             }
 
             /* Calling (parsing) CommitRequest from special class. */
 
-            CommitRequest commitRequest = Stratum.Body.Context.getCommitRequest(dateParams, commitParams);
+            CommitRequest commitRequest = RequestCommit.getCommitRequest(DateParams[0], DateParams[1], CommitParams[0], CommitParams[1], CommitParams[2]);
 
             EmbedBuilder embed = new EmbedBuilder();
 
