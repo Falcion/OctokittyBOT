@@ -11,7 +11,7 @@ using Stratum.Body;
 
 namespace Stratum.Core
 {
-    public class Advanced : ModuleBase<SocketCommandContext>
+    public class Head : ModuleBase<SocketCommandContext>
     {
         /*
             The advanced commands for requests to the GitHub API.
@@ -251,6 +251,27 @@ namespace Stratum.Core
             }
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+        }
+
+        [Command("user@find")]
+
+        public async Task UserFind()
+        {
+
+        }
+
+        [Command("repos@find")]
+
+        public async Task ReposFind()
+        {
+
+        }
+
+        [Command("code@find")]
+
+        public async Task CodeFind()
+        {
+
         }
     }
 }
