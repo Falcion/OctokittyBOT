@@ -315,5 +315,67 @@ namespace Stratum.Core
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
         }
+
+        /*
+            Command: org@info
+            Task: Getting basic information about a given organization. 
+            Arguments: organization's login.
+         */
+
+        [Command("org@info")]
+
+        public async Task OrgInfo(string? login)
+        {
+            string? GIT_TOKEN = Configuration.getGitToken();
+
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            Credentials tokenAuth = new Credentials(GIT_TOKEN);
+
+            git.Credentials = tokenAuth;
+
+            Organization org = await git.Organization.Get(login);
+
+            EmbedBuilder embed = new EmbedBuilder();
+
+            embed.WithTitle("Organization Information")
+                 .WithColor(Color.Blue)
+                 .WithUrl(org.Url)
+                 .WithImageUrl(org.AvatarUrl)
+                 .AddField("Email:", org.Email)
+                 .AddField("Billing:", org.BillingAddress)
+                 .AddField("Gists:", org.PublicGists + org.PrivateGists);
+
+            await Context.Channel.SendMessageAsync(null, false, embed.Build());
+        }
+
+        /*
+            Command: pull@request
+            Task: Getting basic information about a given pull request. 
+            Arguments: repository's owner, repository's name, pull request's number.
+         */
+
+        [Command("pull@request")]
+
+        public async Task PullRequest(string? owner, string? name, int number)
+        {
+            string? GIT_TOKEN = Configuration.getGitToken();
+
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            Credentials tokenAuth = new Credentials(GIT_TOKEN);
+
+            git.Credentials = tokenAuth;
+
+            Octokit.PullRequest pullRequest = await git.PullRequest.Get(owner, name, number);
+
+            EmbedBuilder embed = new EmbedBuilder();
+
+            embed.WithTitle("Pull Request Information")
+                 .WithColor(Color.Blue)
+                 .AddField("Draft:", pullRequest.Draft)
+                 .AddField("State:", pullRequest.State.Value)
+                 .AddField("Total:", pullRequest.ChangedFiles);
+
+            await Context.Channel.SendMessageAsync(null, false, embed.Build());
+        }
     }
 }
