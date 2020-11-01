@@ -9,6 +9,11 @@ namespace Stratum
         public static string GIT_TOKEN;
         public static string BOT_PREFIX;
 
+        /*
+            Initiliazation method.
+            Used to check for the existence of a configuration file, create it, or call a postinitialization method.
+         */
+
         public static void Init()
         {
             if(!File.Exists(".cfg"))
@@ -27,6 +32,11 @@ namespace Stratum
 
             PostInit();
         }
+
+        /*
+            Postinitialization method.
+            Used to read an already existing configuration file (can be reused).
+         */
 
         public static void PostInit()
         {
@@ -63,6 +73,10 @@ namespace Stratum
                 }
             }
         }
+
+        /*
+            Getters and setters methods.
+         */
 
         public static string getAuthToken()
         {
