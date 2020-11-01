@@ -4,6 +4,12 @@ namespace Stratum
 {
     public static class Logger
     {
+
+        /*
+            Usage: secondary information or comments in console.
+            Color: DarkGray.
+         */
+
         public static void Info(string message)
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -13,6 +19,11 @@ namespace Stratum
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
+        /*
+            Usage: warning user about something.
+            Color: Yellow.
+         */
+
         public static void Warn(string message)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -21,6 +32,11 @@ namespace Stratum
 
             Console.ForegroundColor = ConsoleColor.Gray;
         }
+
+        /*
+            Usage: direct emphasis on the error.
+            Color: Red.
+         */
 
         public static void Error(string message)
         {
