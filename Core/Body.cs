@@ -212,5 +212,87 @@ namespace Stratum.Core
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
         }
+
+        /*
+            Command: branch@array
+            Task: Get a list of all branches in the specified repository.
+            Arguments: repository's owner, repository's name, page number.
+         */
+
+        [Command("branch@array")]
+
+        public async Task BranchArray(string? owner, string? name, int page = 0)
+        {
+            string? GIT_TOKEN = Configuration.getGitToken();
+
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            Credentials tokenAuth = new Credentials(GIT_TOKEN);
+
+            git.Credentials = tokenAuth;
+
+            IReadOnlyList<Branch>? branches = await git.Repository.Branch.GetAll(owner, name);
+
+            EmbedBuilder embed = new EmbedBuilder();
+
+            embed.WithTitle("Repository's Branches")
+                 .WithColor(Color.Blue)
+                 .WithFooter(footer => footer.Text = $"Page: {page}");
+
+            if (page > 0) page--;
+            if (page < 0) page = 0;
+
+            uint encounter = 0;
+
+            for (int i = 0 + 25 * page; i < branches.Count; i++)
+            {
+                encounter++;
+                if (encounter == 25) break;
+
+                embed.AddField($"Branch (#{i}):", branches[i].Name);
+            }
+
+            await Context.Channel.SendMessageAsync(null, false, embed.Build());
+        }
+
+        /*
+            Command: release@array
+            Task: Get a list of all releases in the specified repository.
+            Arguments: repository's owner, repository's name, page number.
+         */
+
+        [Command("release@array")]
+
+        public async Task ReleaseArray(string? owner, string? name, int page = 0)
+        {
+            string? GIT_TOKEN = Configuration.getGitToken();
+
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            Credentials tokenAuth = new Credentials(GIT_TOKEN);
+
+            git.Credentials = tokenAuth;
+
+            IReadOnlyList<Release>? releases = await git.Repository.Release.GetAll(owner, name);
+
+            EmbedBuilder embed = new EmbedBuilder();
+
+            embed.WithTitle("Repository's Releases")
+                 .WithColor(Color.Blue)
+                 .WithFooter(footer => footer.Text = $"Page: {page}");
+
+            if (page > 0) page--;
+            if (page < 0) page = 0;
+
+            uint encounter = 0;
+
+            for (int i = 0 + 25 * page; i < releases.Count; i++)
+            {
+                encounter++;
+                if (encounter == 25) break;
+
+                embed.AddField($"Release (#{i}):", releases[i].TagName);
+            }
+
+            await Context.Channel.SendMessageAsync(null, false, embed.Build());
+        }
     }
 }
