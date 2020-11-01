@@ -17,15 +17,16 @@ namespace Stratum.Body
             {
                 Filter = filter,
 
-                Creator = issueParams[0],
+                Creator   = issueParams[0],
                 Mentioned = issueParams[1],
-                Assignee = issueParams[2],
+                Assignee  = issueParams[2],
                 Milestone = issueParams[3]
             };
         }
 
         public static CommitRequest getCommitRequest(DateTime[]? dateParams, string[]? commitParams)
         {
+
             /*
                 An array of Issue parameters for the next call to the GitHub API (dateParams).
                 In the appropriate order:, until date, since date.
@@ -38,12 +39,12 @@ namespace Stratum.Body
 
             return new CommitRequest()
             {
-                Author = commitParams.ElementAt(0),
-                Path = commitParams.ElementAt(1),
-                Sha = commitParams.ElementAt(2),
+                Author = commitParams[0],
+                Path   = commitParams[1],
+                Sha    = commitParams[2],
 
-                Since = dateParams.ElementAt(1),
-                Until = dateParams.ElementAt(0)
+                Until  = dateParams[0],
+                Since  = dateParams[1]
             };
         }
     }

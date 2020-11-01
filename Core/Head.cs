@@ -71,9 +71,9 @@ namespace Stratum.Core
                     For detailed comments go to the specified class.
                  */
 
-                if (filterArray[i].StartsWith(" issueFilter: "))
+                if (filterArray[i].StartsWith(" issue@filter: "))
                 {
-                    filterArray[i] = filterArray[i].Remove(0, 15);
+                    filterArray[i] = filterArray[i].Remove(0, 16);
 
                     issueFilter = Parser.getIssueFilter(filterArray[i]);
                 }
@@ -169,14 +169,14 @@ namespace Stratum.Core
             filterArray[0].Insert(0, " ");
 
             /*
-                An array of Issue parameters for the next call to the GitHub API.
-                In the appropriate order: date checker, until date, since date.
+                An array of Commit parameters for the next call to the GitHub API.
+                In the appropriate order: until date, since date.
              */
 
             DateTime[] dateParams = new DateTime[] { DateTime.Now, new DateTime(1999, 10, 1) };
 
             /*
-                An array of Issue parameters for the next call to the GitHub API.
+                An array of Commit parameters for the next call to the GitHub API.
                 In the appropriate order: commit's author, commit's path, commit's SHA.
              */
 
@@ -251,27 +251,6 @@ namespace Stratum.Core
             }
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
-        }
-
-        [Command("user@find")]
-
-        public async Task UserFind()
-        {
-
-        }
-
-        [Command("repos@find")]
-
-        public async Task ReposFind()
-        {
-
-        }
-
-        [Command("code@find")]
-
-        public async Task CodeFind()
-        {
-
         }
     }
 }
