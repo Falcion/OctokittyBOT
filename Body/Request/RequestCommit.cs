@@ -1,7 +1,6 @@
-﻿using Octokit;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+
+using Octokit;
 
 namespace Stratum.Body.Request
 {

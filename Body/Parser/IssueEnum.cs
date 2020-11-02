@@ -4,7 +4,7 @@ using Octokit;
 
 namespace Stratum.Body
 {
-    public static class FilterIssue
+    public static class IssueEnum
     {
         public static IssueFilter getIssueFilter(string? argument)
         {
@@ -50,7 +50,7 @@ namespace Stratum.Body
 
         /* A method that returns a static IssueFilter value that works for none of requests (system getter). */
 
-        public static IssueFilter getStaticFilter()
+        private static IssueFilter getStaticFilter()
         {
             return new IssueFilter();
         }
