@@ -17,6 +17,11 @@ namespace Stratum.Body.Parser
 
             switch(argument)
             {
+                /* 
+                    Returning all possible languages ​​(file types) that are supported by Octokit.net.
+                    See https://octokitnet.readthedocs.io/en/latest/
+                 */
+
                 case "abap": 
                     return Language.Abap;
 

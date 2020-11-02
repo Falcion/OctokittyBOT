@@ -50,13 +50,6 @@ namespace Stratum.Core
 
             string[] filterArray = syntax.Split(',');
 
-            /* 
-                Insert a space into the first element of the array.
-                It is necessary to avoid additional conditions in the "for" loop when checking filters.           
-             */
-
-            filterArray[0].Insert(0, " ");
-
             IssueFilter issueFilter = new IssueFilter();
 
             /*
@@ -66,7 +59,15 @@ namespace Stratum.Core
 
             string[] IssueParams = new string[] { "none", "none", "none", "none" };
 
-            for(int i = 0; i < filterArray.Length; i++)
+            /* 
+                Insert a space into elements of the array.
+                It's necessary to avoid additional conditions in the "for" loop when checking filters.           
+             */
+
+            for (int _B90D = 0; _B90D < filterArray.Length; _B90D++)
+                if (!filterArray[_B90D].StartsWith(" ")) filterArray[_B90D].Insert(0, " ");
+
+            for (int i = 0; i < filterArray.Length; i++)
             {
                 /*
                     We pass the raw string through the handler and parse it into the finished variable.
@@ -163,13 +164,6 @@ namespace Stratum.Core
 
             string[] filterArray = syntax.Split(',');
 
-            /* 
-                Insert a space into the first element of the array.
-                It is necessary to avoid additional conditions in the "for" loop when checking filters.           
-             */
-
-            filterArray[0].Insert(0, " ");
-
             /*
                 An array of Commit parameters for the next call to the GitHub API.
                 In the appropriate order: until date, since date.
@@ -184,7 +178,15 @@ namespace Stratum.Core
 
             string[] CommitParams = new string[] { "none", "none", "none" };
 
-            for(int i = 0; i < filterArray.Length; i++)
+            /* 
+                Insert a space into elements of the array.
+                It's necessary to avoid additional conditions in the "for" loop when checking filters.           
+             */
+
+            for (int _B90D = 0; _B90D < filterArray.Length; _B90D++)
+                if (!filterArray[_B90D].StartsWith(" ")) filterArray[_B90D].Insert(0, " ");
+
+            for (int i = 0; i < filterArray.Length; i++)
             {
                 /*
                     We pass the raw string through the handler and parse it into the finished variable.
@@ -286,13 +288,6 @@ namespace Stratum.Core
 
             string[] filterArray = syntax.Split(',');
 
-            /* 
-                Insert a space into the first element of the array.
-                It is necessary to avoid additional conditions in the "for" loop when checking filters.           
-             */
-
-            filterArray[0].Insert(0, " ");
-
             /*
                 An array of User parameters for the next call to the GitHub API.
                 In the appropriate order: followers, repositories.
@@ -313,7 +308,15 @@ namespace Stratum.Core
 
             string[] UserParams = new string[] { "none", "none", "none", "none" };
 
-            for(int i = 0; i < filterArray.Length; i++)
+            /* 
+                Insert a space into elements of the array.
+                It's necessary to avoid additional conditions in the "for" loop when checking filters.           
+             */
+
+            for (int _B90D = 0; _B90D < filterArray.Length; _B90D++)
+                if (!filterArray[_B90D].StartsWith(" ")) filterArray[_B90D].Insert(0, " ");
+
+            for (int i = 0; i < filterArray.Length; i++)
             {
                 /*
                     We pass the raw string through the handler and parse it into the finished variable.
@@ -404,7 +407,202 @@ namespace Stratum.Core
                 encounter++;
                 if (encounter >= 25) break;
 
-                embed.AddField($"User (#{users.Items[i].Name}):", users.Items[i].Url);
+                /* 
+                    Since these are individual users, and not just parts of the repository. 
+                    We display the name and only the URL. The user can use user@info for details.
+                 */
+
+                embed.AddField($"User ({users.Items[i].Name}):", $"**{users.Items[i].Url}**");
+            }
+
+            await Context.Channel.SendMessageAsync(null, false, embed.Build());
+        }
+
+        [Command("repos@find")]
+
+        public async Task ReposFind(int page = 0, [Remainder]string? syntax = "none")
+        {
+            string? GIT_TOKEN = Configuration.getGitToken();
+
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            Credentials tokenAuth = new Credentials(GIT_TOKEN);
+
+            git.Credentials = tokenAuth;
+
+            /*
+               Checking the syntax of filters at the time of their existence.
+               At least one element so that the code does not break.
+            */
+
+            if (syntax == "none")
+            {
+                Logger.Error("Wrong command syntax format!");
+                return;
+            }
+
+            string[] filterArray = syntax.Split(',');
+
+            /*
+                An array of Repository parameters for the next call to the GitHub API.
+                In the appropriate order: stars count, size range (kilobytes), forks count.
+             */
+
+            Octokit.Range[] RangeParams = new Octokit.Range[] { RangeEnum.getDefaultRange(), RangeEnum.getDefaultRange(), RangeEnum.getDefaultRange() };
+
+            ForkQualifier forkQualifier = new ForkQualifier();
+
+            Language language = new Language();
+
+            DateRange created = DateEnum.getDefaultRange();
+            DateRange updated = PeriodEnum.getDefaultRange();
+
+            /*
+                An array of Repository parameters for the next call to the GitHub API.
+                In the appropriate order: repository's owner, repository's name.
+             */
+
+            string[] ReposParams = new string[] { "none", "none" };
+
+            /*
+                An array of Repository parameters for the next call to the GitHub API.
+                In the appropriate order: README, description.
+             */
+
+            bool[] BooleanParams = new bool[] { true, true };
+
+            /* 
+                Insert a space into elements of the array.
+                It's necessary to avoid additional conditions in the "for" loop when checking filters.           
+             */
+
+            for (int _B90D = 0; _B90D < filterArray.Length; _B90D++)
+                if (!filterArray[_B90D].StartsWith(" ")) filterArray[_B90D].Insert(0, " ");
+
+            for (int i = 0; i < filterArray.Length; i++)
+            {
+                /*
+                    We pass the raw string through the handler and parse it into the finished variable.
+                    For detailed comments go to the specified class.
+                 */
+
+                if (filterArray[i].StartsWith(" stars: "))
+                {
+                    filterArray[i] = filterArray[i].Remove(0, 8);
+
+                    string[]? syntaxArray = filterArray[i].Split(' ');
+
+                    RangeParams[0] = RangeEnum.getRange(syntaxArray);
+                }
+
+                if (filterArray[i].StartsWith(" size: "))
+                {
+                    filterArray[i] = filterArray[i].Remove(0, 7);
+
+                    string[]? syntaxArray = filterArray[i].Split(' ');
+
+                    RangeParams[1] = RangeEnum.getRange(syntaxArray);
+                }
+
+                if (filterArray[i].StartsWith(" forks: "))
+                {
+                    filterArray[i] = filterArray[i].Remove(0, 7);
+
+                    string[]? syntaxArray = filterArray[i].Split(' ');
+
+                    RangeParams[2] = RangeEnum.getRange(syntaxArray);
+                }
+
+                if(filterArray[i].StartsWith(" fork@qualifier: "))
+                {
+                    filterArray[i] = filterArray[i].Remove(0, 17);
+
+                    forkQualifier = ForkEnum.getForkQualifier(filterArray[i]);
+                }
+
+                if(filterArray[i].StartsWith(" language: "))
+                {
+                    filterArray[i] = filterArray[i].Remove(0, 11);
+
+                    language = LangEnum.getLanguage(filterArray[i]);
+                }
+
+                if(filterArray[i].StartsWith(" creation@date: "))
+                {
+                    filterArray[i] = filterArray[i].Remove(0, 16);
+
+                    created = DateEnum.getDateRange(filterArray[i]);
+                }
+
+                if(filterArray[i].StartsWith(" update@date: "))
+                {
+                    filterArray[i] = filterArray[i].Remove(0, 14);
+
+                    updated = PeriodEnum.getPeriodRange(filterArray[i]);
+                }
+
+                /* Processing of simple elements. */
+
+                if (filterArray[i].StartsWith(" repos@git: "))
+                {
+                    filterArray[i] = filterArray[i].Remove(0, 12);
+
+                    string[]? syntaxArray = filterArray[i].Split('/');
+
+                    ReposParams[0] = syntaxArray[0];
+                    ReposParams[1] = syntaxArray[1];
+                }
+
+                if(filterArray[i].StartsWith(" readme: ")) 
+                {
+                    filterArray[i] = filterArray[i].Remove(0, 9);
+
+                    BooleanParams[0] = bool.Parse(filterArray[i]);
+                }
+
+                if(filterArray[i].StartsWith(" desc: "))
+                {
+                    filterArray[i] = filterArray[i].Remove(0, 7);
+
+                    BooleanParams[1] = bool.Parse(filterArray[i]);
+                }
+            }
+
+            SearchRepositoriesRequest reposRequest = RequestRepos.getSearchRepos(RangeParams[0], RangeParams[1], RangeParams[2], forkQualifier, language, created, updated, ReposParams[0], ReposParams[1], BooleanParams[0], BooleanParams[1]);
+
+            EmbedBuilder embed = new EmbedBuilder();
+
+            SearchRepositoryResult repos = await git.Search.SearchRepo(reposRequest);
+
+            /*
+                Fixing page counter, so user can type 1 or 0 and that will be equals as 0.
+                In other words, we transfer the usual number system to the number system of arrays.
+             */
+
+            if (page > 0) page--;
+            if (page < 0) page = 0;
+
+            uint encounter = 0;
+
+            embed.WithTitle("GitHub's Codes")
+                 .WithColor(Color.Blue)
+                 .WithFooter(footer => footer.Text = $"Page: {page}");
+
+            for (int i = 0 + 25 * page; i < repos.Items.Count; i++)
+            {
+                /*
+                    Discord API doesn't allow you to create EmbedMessage with more than 25 fields.
+                    See https://discord.com/developers/docs/resources/channel#embed-limits-limits
+                 */
+
+                encounter++;
+                if (encounter >= 25) break;
+
+                /* 
+                    Since these are individual repos, and not just parts of the list. 
+                    We display the name and only the URL. The user can find repository and check it for details.
+                 */
+
+                embed.AddField($"Repos ({repos.Items[i].FullName}):", $"**{repos.Items[i].Url}**");
             }
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
