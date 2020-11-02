@@ -60,12 +60,16 @@ namespace Stratum.Core
             string[] IssueParams = new string[] { "none", "none", "none", "none" };
 
             /* 
-                Insert a space into elements of the array.
+                Insert a space into elements of the array and implementing it to lower case.
                 It's necessary to avoid additional conditions in the "for" loop when checking filters.           
              */
 
             for (int _B90D = 0; _B90D < filterArray.Length; _B90D++)
+            {
+                filterArray[_B90D] = filterArray[_B90D].ToLower();
+
                 if (!filterArray[_B90D].StartsWith(" ")) filterArray[_B90D].Insert(0, " ");
+            }
 
             for (int i = 0; i < filterArray.Length; i++)
             {
@@ -179,12 +183,16 @@ namespace Stratum.Core
             string[] CommitParams = new string[] { "none", "none", "none" };
 
             /* 
-                Insert a space into elements of the array.
+                Insert a space into elements of the array and implementing it to lower case.
                 It's necessary to avoid additional conditions in the "for" loop when checking filters.           
              */
 
             for (int _B90D = 0; _B90D < filterArray.Length; _B90D++)
+            {
+                filterArray[_B90D] = filterArray[_B90D].ToLower();
+
                 if (!filterArray[_B90D].StartsWith(" ")) filterArray[_B90D].Insert(0, " ");
+            }
 
             for (int i = 0; i < filterArray.Length; i++)
             {
@@ -309,12 +317,16 @@ namespace Stratum.Core
             string[] UserParams = new string[] { "none", "none", "none", "none" };
 
             /* 
-                Insert a space into elements of the array.
+                Insert a space into elements of the array and implementing it to lower case.
                 It's necessary to avoid additional conditions in the "for" loop when checking filters.           
              */
 
             for (int _B90D = 0; _B90D < filterArray.Length; _B90D++)
+            {
+                filterArray[_B90D] = filterArray[_B90D].ToLower();
+
                 if (!filterArray[_B90D].StartsWith(" ")) filterArray[_B90D].Insert(0, " ");
+            }
 
             for (int i = 0; i < filterArray.Length; i++)
             {
@@ -471,12 +483,16 @@ namespace Stratum.Core
             bool[] BooleanParams = new bool[] { true, true };
 
             /* 
-                Insert a space into elements of the array.
+                Insert a space into elements of the array and implementing it to lower case.
                 It's necessary to avoid additional conditions in the "for" loop when checking filters.           
              */
 
             for (int _B90D = 0; _B90D < filterArray.Length; _B90D++)
+            {
+                filterArray[_B90D] = filterArray[_B90D].ToLower();
+
                 if (!filterArray[_B90D].StartsWith(" ")) filterArray[_B90D].Insert(0, " ");
+            }
 
             for (int i = 0; i < filterArray.Length; i++)
             {
@@ -603,6 +619,146 @@ namespace Stratum.Core
                  */
 
                 embed.AddField($"Repos ({repos.Items[i].FullName}):", $"**{repos.Items[i].Url}**");
+            }
+
+            await Context.Channel.SendMessageAsync(null, false, embed.Build());
+        }
+
+        [Command("code@find")]
+
+        public async Task CodeFind(int page = 0, [Remainder] string? syntax = "none")
+        {
+            string? GIT_TOKEN = Configuration.getGitToken();
+
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            Credentials tokenAuth = new Credentials(GIT_TOKEN);
+
+            git.Credentials = tokenAuth;
+
+            /*
+               Checking the syntax of filters at the time of their existence.
+               At least one element so that the code does not break.
+            */
+
+            if (syntax == "none")
+            {
+                Logger.Error("Wrong command syntax format!");
+                return;
+            }
+
+            string[] filterArray = syntax.Split(',');
+
+            /* 
+                Insert a space into elements of the array and implementing it to lower case.
+                It's necessary to avoid additional conditions in the "for" loop when checking filters.           
+             */
+
+            for (int _B90D = 0; _B90D < filterArray.Length; _B90D++)
+            {
+                filterArray[_B90D] = filterArray[_B90D].ToLower();
+
+                if (!filterArray[_B90D].StartsWith(" ")) filterArray[_B90D].Insert(0, " ");
+            }
+                
+            /*
+                An array of Repository parameters for the next call to the GitHub API.
+                In the appropriate order: filename, path, user, repository's owner, repository's name.
+             */
+
+            string[] CodeParams = new string[] { "none", "none", "none", "none", "none" };
+
+            Language language = new Language();
+
+            bool forks = false;
+
+            /* File size (bytes). */
+
+            Octokit.Range size = RangeEnum.getDefaultRange();
+
+            for (int i = 0; i < filterArray[i].Length; i++)
+            {
+                /*
+                    We pass the raw string through the handler and parse it into the finished variable.
+                    For detailed comments go to the specified class.
+                 */
+
+                if (filterArray[i].StartsWith(" language: "))
+                {
+                    filterArray[i] = filterArray[i].Remove(0, 11);
+
+                    language = LangEnum.getLanguage(filterArray[i]);
+                }
+
+                if (filterArray[i].StartsWith(" size: "))
+                {
+                    filterArray[i] = filterArray[i].Remove(0, 7);
+
+                    string[]? syntaxArray = filterArray[i].Split(' ');
+
+                    size = RangeEnum.getRange(syntaxArray);
+                }
+
+                /* Processing of simple elements. */
+
+                if (filterArray[i].StartsWith(" filename: "))
+                    CodeParams[0] = filterArray[i].Remove(0, 11);
+
+                if (filterArray[i].StartsWith(" path: "))
+                    CodeParams[1] = filterArray[i].Remove(0, 7);
+
+                if (filterArray[i].StartsWith(" user: "))
+                    CodeParams[2] = filterArray[i].Remove(0, 7);
+
+                if (filterArray[i].StartsWith(" repos@git: "))
+                {
+                    filterArray[i] = filterArray[i].Remove(0, 12);
+
+                    string[]? syntaxArray = filterArray[i].Split('/');
+
+                    CodeParams[3] = syntaxArray[0];
+                    CodeParams[4] = syntaxArray[1];
+                }
+
+                if (filterArray[i].StartsWith(" forks: "))
+                    forks = bool.Parse(filterArray[i].Remove(0, 8));
+            }
+
+            SearchCodeRequest codeRequest = RequestCode.getSearchCode(CodeParams[0], CodeParams[1], CodeParams[2], CodeParams[3], CodeParams[4], language, forks, size); ;
+
+            EmbedBuilder embed = new EmbedBuilder();
+
+            SearchCodeResult codes = await git.Search.SearchCode(codeRequest);
+
+            /*
+                Fixing page counter, so user can type 1 or 0 and that will be equals as 0.
+                In other words, we transfer the usual number system to the number system of arrays.
+             */
+
+            if (page > 0) page--;
+            if (page < 0) page = 0;
+
+            uint encounter = 0;
+
+            embed.WithTitle("GitHub's Codes")
+                 .WithColor(Color.Blue)
+                 .WithFooter(footer => footer.Text = $"Page: {page}");
+
+            for (int i = 0 + 25 * page; i < codes.Items.Count; i++)
+            {
+                /*
+                    Discord API doesn't allow you to create EmbedMessage with more than 25 fields.
+                    See https://discord.com/developers/docs/resources/channel#embed-limits-limits
+                 */
+
+                encounter++;
+                if (encounter >= 25) break;
+
+                /* 
+                    Since these are individual codes, and not just parts of the repository. 
+                    We display the name and only the URL. The user can find repository and check it for details.
+                 */
+
+                embed.AddField($"Code ({codes.Items[i].Sha}):", $"**{codes.Items[i].Url}**");
             }
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());

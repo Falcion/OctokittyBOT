@@ -6,7 +6,7 @@ namespace Stratum.Body.Request
 {
     public static class RequestUser
     {
-        public static SearchUsersRequest getSearchUser(Octokit.Range? Followers, Octokit.Range? Repositories, DateRange? Created, Language? Language, AccountSearchType? AccountType, string? Location, string? Username, string? Email, string? Fullname)
+        public static SearchUsersRequest getSearchUser(Octokit.Range Followers, Octokit.Range Repositories, DateRange Created, Language Language, AccountSearchType AccountType, string? Location, string? Username, string? Email, string? Fullname)
         {
             /*
                 An array of User parameters for the next call to the GitHub API.
