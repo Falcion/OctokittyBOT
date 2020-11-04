@@ -430,6 +430,12 @@ namespace Stratum.Core
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
         }
 
+        /*
+            Command: repos@find
+            Task: Get a list of all repos by specified filters.
+            Arguments: page number, filters syntax.
+         */
+
         [Command("repos@find")]
 
         public async Task ReposFind(int page = 0, [Remainder]string? syntax = "none")
@@ -623,6 +629,12 @@ namespace Stratum.Core
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
         }
+
+        /*
+            Command: code@find
+            Task: Get a list of all codes by specified filters.
+            Arguments: page number, filters syntax.
+         */
 
         [Command("code@find")]
 
