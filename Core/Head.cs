@@ -102,7 +102,7 @@ namespace Stratum.Core
 
             /* Calling (parsing) RepositoryIssueRequest from special class. */
 
-            RepositoryIssueRequest issueRequest = RequestIssue.getIssueRequest(issueFilter, IssueParams[0], IssueParams[1], IssueParams[2], IssueParams[3]);
+            RepositoryIssueRequest issueRequest = EnumIssue.getIssueRequest(issueFilter, IssueParams[0], IssueParams[1], IssueParams[2], IssueParams[3]);
 
             EmbedBuilder embed = new EmbedBuilder();
 
@@ -229,7 +229,7 @@ namespace Stratum.Core
 
             /* Calling (parsing) CommitRequest from special class. */
 
-            CommitRequest commitRequest = RequestCommit.getCommitRequest(DateParams[0], DateParams[1], CommitParams[0], CommitParams[1], CommitParams[2]);
+            CommitRequest commitRequest = EnumCommit.getCommitRequest(DateParams[0], DateParams[1], CommitParams[0], CommitParams[1], CommitParams[2]);
 
             EmbedBuilder embed = new EmbedBuilder();
 
@@ -389,7 +389,7 @@ namespace Stratum.Core
                     UserParams[3] = filterArray[i].Remove(0, 11);
             }
 
-            SearchUsersRequest searchRequest = RequestUser.getSearchUser(RangeParams[0], RangeParams[1], created, language, accountType, UserParams[0], UserParams[1], UserParams[2], UserParams[3]);
+            SearchUsersRequest searchRequest = EnumUser.getSearchUser(RangeParams[0], RangeParams[1], created, language, accountType, UserParams[0], UserParams[1], UserParams[2], UserParams[3]);
 
             EmbedBuilder embed = new EmbedBuilder();
 
@@ -583,7 +583,7 @@ namespace Stratum.Core
                 }
             }
 
-            SearchRepositoriesRequest reposRequest = RequestRepos.getSearchRepos(RangeParams[0], RangeParams[1], RangeParams[2], forkQualifier, language, created, updated, ReposParams[0], ReposParams[1], BooleanParams[0], BooleanParams[1]);
+            SearchRepositoriesRequest reposRequest = EnumRepos.getSearchRepos(RangeParams[0], RangeParams[1], RangeParams[2], forkQualifier, language, created, updated, ReposParams[0], ReposParams[1], BooleanParams[0], BooleanParams[1]);
 
             EmbedBuilder embed = new EmbedBuilder();
 
@@ -723,7 +723,7 @@ namespace Stratum.Core
                     forks = bool.Parse(filterArray[i].Remove(0, 8));
             }
 
-            SearchCodeRequest codeRequest = RequestCode.getSearchCode(CodeParams[0], CodeParams[1], CodeParams[2], CodeParams[3], CodeParams[4], language, forks, size); ;
+            SearchCodeRequest codeRequest = EnumCode.getSearchCode(CodeParams[0], CodeParams[1], CodeParams[2], CodeParams[3], CodeParams[4], language, forks, size); ;
 
             EmbedBuilder embed = new EmbedBuilder();
 

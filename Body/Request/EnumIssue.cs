@@ -4,7 +4,7 @@ using Octokit;
 
 namespace Stratum.Body.Request
 {
-    public static class RequestIssue
+    public static class EnumIssue
     {
 
         public static RepositoryIssueRequest getIssueRequest(IssueFilter Filter, string? Creator, string? Mentioned, string? Assignee, string? Milestone)

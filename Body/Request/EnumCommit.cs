@@ -4,7 +4,7 @@ using Octokit;
 
 namespace Stratum.Body.Request
 {
-    public static class RequestCommit
+    public static class EnumCommit
     {
         public static CommitRequest getCommitRequest(DateTime? Until, DateTime? Since, string? Author, string? Path, string? Sha)
         {

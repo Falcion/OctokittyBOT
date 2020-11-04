@@ -4,7 +4,7 @@ using Octokit;
 
 namespace Stratum.Body.Request
 {
-    public static class RequestCode
+    public static class EnumCode
     {
         public static SearchCodeRequest getSearchCode(string? FileName, string? Path, string? User, string? owner, string? name, Language Language, bool? Forks, Octokit.Range Size)
         {

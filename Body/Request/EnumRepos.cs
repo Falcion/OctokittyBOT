@@ -4,7 +4,7 @@ using Octokit;
 
 namespace Stratum.Body.Request
 {
-    public static class RequestRepos
+    public static class EnumRepos
     {
         public static SearchRepositoriesRequest getSearchRepos(Octokit.Range Stars, Octokit.Range Size, Octokit.Range Forks, ForkQualifier ForkQualifier, Language Language, DateRange Created, DateRange Updated, string? User, string? name, bool? Readme, bool? Description)
         {
