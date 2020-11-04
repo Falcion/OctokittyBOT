@@ -44,6 +44,11 @@ namespace Stratum
             AUTH_TOKEN = Configuration.getAuthToken();
 
             await client.LoginAsync(TokenType.Bot, AUTH_TOKEN);
+
+            BOT_PREFIX = Configuration.getBotPrefix();
+
+            await client.SetGameAsync($"{BOT_PREFIX}git@help");
+
             await client.StartAsync();
 
             await Task.Delay(-1);
