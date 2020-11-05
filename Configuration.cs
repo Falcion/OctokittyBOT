@@ -9,6 +9,8 @@ namespace Stratum
         public static string GIT_TOKEN;
         public static string BOT_PREFIX;
 
+        public static bool DEBUG;
+
         /*
             Initiliazation method.
             Used to check for the existence of a configuration file, create it, or call a postinitialization method.
@@ -22,7 +24,7 @@ namespace Stratum
 
                 Logger.Warn("Created configuration file! Write GitHub API token and Discord API token in this file.");
 
-                string ARRAY = "AUTH_TOKEN: \"\"\nGIT_TOKEN: \"\"\nBOT_PREFIX: \"$ \"";
+                string ARRAY = "AUTH_TOKEN: \"\"\nGIT_TOKEN: \"\"\nBOT_PREFIX: \"$ \"\nDEBUG: FALSE";
 
                 File.WriteAllText(".cfg", ARRAY);
 
@@ -70,6 +72,14 @@ namespace Stratum
 
                     BOT_PREFIX = param[i];
                 }
+                if(param[i].StartsWith("DEBUG: "))
+                {
+                    param[i] = param[i].Remove(0, 7);
+
+                    param[i] = param[i].ToLower();
+
+                    DEBUG = bool.Parse(param[i]);
+                }
             }
         }
 
@@ -105,6 +115,16 @@ namespace Stratum
         public static void setBotPrefix(string prefix)
         {
             BOT_PREFIX = prefix;
+        }
+
+        public static bool getDebug()
+        {
+            return DEBUG;
+        }
+
+        public static void setDebug(bool arg)
+        {
+            DEBUG = arg;
         }
     }
 }

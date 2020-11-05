@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,16 @@ namespace Stratum
 
             Configuration.Init();
 
+            Debugger.Init();
+
+            bool SUCCESS = Debugger.getSuccess();
+
+            if(SUCCESS == false)
+            {
+                Logger.Warn("The program was forced to terminate its work ahead of schedule due to an unexpected error.");
+                return;
+            }
+
             client = new DiscordSocketClient();
             cmd = new CommandService();
 
@@ -53,7 +64,7 @@ namespace Stratum
         {
             string? message = arg.Message;
 
-            if (message.Contains("Exception")) Logger.Error(message);
+            if (message.Contains("Exception") || message.Contains("exception")) Logger.Error(message);
             else Logger.Info(message);
 
             return Task.CompletedTask;
