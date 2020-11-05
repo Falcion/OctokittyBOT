@@ -136,6 +136,10 @@ namespace Stratum.Core
             }
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Request for array of issues of the repository created successfully!");
         }
 
         /*
@@ -263,6 +267,10 @@ namespace Stratum.Core
             }
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Request for array of commits of the repository created successfully!");
         }
 
         /*
@@ -428,6 +436,10 @@ namespace Stratum.Core
             }
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Search request for users created successfully!");
         }
 
         /*
@@ -628,6 +640,10 @@ namespace Stratum.Core
             }
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Search request for repositories created successfully!");
         }
 
         /*
@@ -774,6 +790,10 @@ namespace Stratum.Core
             }
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Search request for codes created successfully!");
         }
     }
 }

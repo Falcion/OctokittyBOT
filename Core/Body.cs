@@ -51,6 +51,10 @@ namespace Stratum.Core
                  .AddField("Last Update:", $"{repository.UpdatedAt}");
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Request for information about the repository created successfully!");
         }
 
         /*
@@ -82,6 +86,10 @@ namespace Stratum.Core
                  .AddField("SHA:", branch.Commit.Sha);
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Request for information about the branch created successfully!");
         }
 
         /*
@@ -114,6 +122,10 @@ namespace Stratum.Core
                  .AddField("Zipball URL:", release.ZipballUrl);
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Request for information about the release created successfully!");
         }
 
         /*
@@ -146,6 +158,10 @@ namespace Stratum.Core
                  .AddField("URL:", issue.Url);
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Request for information about the issue created successfully!");
         }
 
         /*
@@ -177,6 +193,10 @@ namespace Stratum.Core
                  .AddField("Total:", commit.Stats.Total);
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Request for information about the commit created successfully!");
         }
 
         /*
@@ -211,6 +231,10 @@ namespace Stratum.Core
                  .AddField("Repos:", user.PublicRepos + user.TotalPrivateRepos);
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Request for information about the user created successfully!");
         }
 
         /*
@@ -262,6 +286,10 @@ namespace Stratum.Core
             }
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Request for array of branches of the repository created successfully!");
         }
 
         /*
@@ -314,6 +342,10 @@ namespace Stratum.Core
             }
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Request for array of releases of the repository created successfully!");
         }
 
         /*
@@ -346,6 +378,10 @@ namespace Stratum.Core
                  .AddField("Gists:", org.PublicGists + org.PrivateGists);
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Request for information about the organization created successfully!");
         }
 
         /*
@@ -376,6 +412,10 @@ namespace Stratum.Core
                  .AddField("Total:", pullRequest.ChangedFiles);
 
             await Context.Channel.SendMessageAsync(null, false, embed.Build());
+
+            /* Implemeting logger into commands module. */
+
+            Logger.Info("Request for information about the pull request created successfully!");
         }
     }
 }

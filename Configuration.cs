@@ -26,7 +26,6 @@ namespace Stratum
 
                 File.WriteAllText(".cfg", ARRAY);
 
-                Console.ForegroundColor = ConsoleColor.Black;
                 Environment.Exit(-1);
             }
 

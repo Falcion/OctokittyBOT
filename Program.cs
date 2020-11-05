@@ -95,8 +95,6 @@ namespace Stratum
 
                     await context.Channel.SendMessageAsync(null, false, embed.Build());
                 }
-
-                else Logger.Info($"{result}");
             }
         }
     }
