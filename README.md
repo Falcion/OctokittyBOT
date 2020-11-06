@@ -20,7 +20,7 @@ If you want to install source code, use GitHub CLI:
 
 ``` gh repo clone Falcion/Stratum ```
 
-If you want to install application, follow this link: **[any OS](https://github.com/Falcion/Stratum/releases/latest/download/Universal.zip)**.
+If you want to install application, follow this link: [any OS](https://github.com/Falcion/Stratum/releases/latest/download/Universal.zip).
 
 ## Using Stratum
 
@@ -47,4 +47,4 @@ If you want to contact me you can reach me at this repository.
 
 ## License
 
-This project uses the following license: **[MIT License](https://github.com/Falcion/Stratum/blob/main/LICENSE)**.
+This project uses the following license: [MIT License](https://github.com/Falcion/Stratum/blob/main/LICENSE).
