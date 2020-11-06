@@ -99,7 +99,7 @@ namespace Stratum
 
                     int hash = result.Error.GetHashCode();
 
-                    embed.WithTitle($"{hash}")
+                    embed.WithTitle($"Error #{hash}")
                          .WithColor(Color.Red)
                          .AddField("Error:", result.Error)
                          .AddField("Reason:", result.ErrorReason);
