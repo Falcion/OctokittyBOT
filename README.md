@@ -20,7 +20,7 @@ If you want to install source code, use GitHub CLI:
 
 ``` gh repo clone Falcion/Stratum ```
 
-If you want to install application: **[Universal](https://github.com/Falcion/Stratum/releases/latest/download/Universal.zip)**.
+If you want to install application, follow this link: **[any OS](https://github.com/Falcion/Stratum/releases/latest/download/Universal.zip)**.
 
 ## Using Stratum
 
