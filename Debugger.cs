@@ -12,15 +12,14 @@ namespace Stratum
         {
             bool? ENABLED = Configuration.getDebug();
 
+            _F9A(true);
+
             /* If Debugger disabled, shut it down. */
 
             if (ENABLED == false)
             {
-                setSuccess(true);
                 return;
             }
-
-            setSuccess(true);
 
             /* Reading bot params from Config module. */
 
@@ -29,7 +28,7 @@ namespace Stratum
 
             /* The array of banned chars, which tokens mustn't contain. */
 
-            char[] BANNED_CHARS = new char[] { '\'', '\"', ':', ';', '\\', '@', '#', '№', '$', '%', '^', '&', '?', '*', '(', ')', '{', '}', '<', '>', ',', '.', '/', '|', '!', '~', '`' };
+            char[] BANNED_CHARS = new char[] { '\'', '\"', ':', ';', '\\', '@', '#', '№', '$', '%', '^', '&', '?', '*', '(', ')', '{', '}', '<', '>', ',', '.', '/', '|', '!', '~', '`', ' ' };
 
             for (int i = 0; i < BANNED_CHARS.Length; i++)
             {
@@ -37,16 +36,34 @@ namespace Stratum
                 {
                     Logger.Error("Invalid Discord API token format!");
 
-                    setSuccess(false);
+                    _F9A(false);
                     return;
                 }
                 if (GIT_TOKEN.StartsWith(BANNED_CHARS[i]))
                 {
                     Logger.Error("Invalid GitHub API token format!");
 
-                    setSuccess(false);
+                    _F9A(false);
                     return;
                 }
+            }
+
+            /* Checking the configuration variables for the moment they are empty. */
+
+            if (AUTH_TOKEN == null)
+            {
+                Logger.Error("Invalid Discord API token format!");
+
+                _F9A(false);
+                return;
+            }
+
+            if (GIT_TOKEN == null)
+            {
+                Logger.Error("Invalid GitHub API token format!");
+
+                _F9A(false);
+                return;
             }
         }
 
@@ -59,7 +76,7 @@ namespace Stratum
             return SUCCESS;
         }
 
-        private static void setSuccess(bool arg)
+        private static void _F9A(bool arg)
         {
             SUCCESS = arg;
         }

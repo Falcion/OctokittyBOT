@@ -34,9 +34,13 @@ namespace Stratum
 
             bool SUCCESS = Debugger.getSuccess();
 
-            if(SUCCESS == false)
+            /* If the debugger returns an error message, then force the console to close. */
+
+            if (SUCCESS == false)
             {
                 Logger.Warn("The program was forced to terminate its work ahead of schedule due to an unexpected error.");
+                Environment.Exit(-1);
+
                 return;
             }
 
