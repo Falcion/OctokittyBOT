@@ -8,7 +8,7 @@ When a new version of an application is released, its old ones are automatically
 
 | Version | Supported |
 | :-----: | :-------: |
-| 0.4.2-post | :white_check_mark: |
+| 0.4.2-post | :heavy_check_mark: |
 | 0.4.2 | :x: |
 | 0.4.1 | :x: |
 | 0.4-alpha | :x: |
