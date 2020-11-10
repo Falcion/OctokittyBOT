@@ -1,6 +1,6 @@
 # Security policy
 
-This document provides information on the safety of using the bot and its direct policy.
+This document discusses how to safely use this bot and type input data. Below, I also provide guidelines on how to report vulnerabilities in Stratum.
 
 ## Safety Use
 
