@@ -6,12 +6,12 @@
 
 When a new version of an application is released, its old ones are automatically no longer supported (with only a few exceptions).
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| Version | Supported |
+| :-----: | :-------: |
+| 0.4.2-post | :white_check_mark: |
+| 0.4.2 | :x: |
+| 0.4.1 | :x: |
+| 0.4-alpha | :x: |
 
 ## Reporting a Vulnerability
 
