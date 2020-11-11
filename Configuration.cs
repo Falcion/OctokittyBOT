@@ -24,7 +24,7 @@ namespace Stratum
 
                 Logger.Warn("Created configuration file! Write GitHub API token and Discord API token in this file.");
 
-                string ARRAY = "AUTH_TOKEN: \"\"\nGIT_TOKEN: \"\"\nBOT_PREFIX: \"$ \"\nDEBUG: FALSE";
+                string ARRAY = "AUTH_TOKEN: \"\"\nGIT_TOKEN: \"\"\nBOT_PREFIX: \"$ \"\n# If you want to turn off debugger, change to FALSE\n# Default: TRUE \nDEBUG: FALSE";
 
                 File.WriteAllText(".cfg", ARRAY);
 
@@ -76,9 +76,8 @@ namespace Stratum
                 {
                     param[i] = param[i].Remove(0, 7);
 
-                    param[i] = param[i].ToLower();
-
-                    DEBUG = bool.Parse(param[i]);
+                    if (param[i].StartsWith("TRUE")) DEBUG = true;
+                    if (param[i].StartsWith("FALSE")) DEBUG = false;
                 }
             }
         }
