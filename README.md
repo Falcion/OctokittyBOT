@@ -1,6 +1,6 @@
 ﻿# Stratum
 
-![license](https://img.shields.io/github/license/Falcion/Stratum?color=blue) ![release](https://img.shields.io/github/v/tag/Falcion/Stratum?color=brightgreen&label=release)
+![license](https://img.shields.io/github/license/Falcion/Stratum?color=blue) ![release](https://img.shields.io/github/v/tag/Falcion/Stratum?color=brightgreen&label=release) ![build](https://img.shields.io/github/workflow/status/Falcion/Stratum/.NET%20Core)
 
 Stratum is a Discord bot that allows users to do requests to GitHub API and get information about it.
 
