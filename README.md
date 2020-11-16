@@ -43,7 +43,7 @@ To contribute to Stratum, follow these steps:
 
 ## Contact
 
-If you want to contact me you can reach me at falcionml@gmail.com.
+If you want to contact me you can reach me at issue topic.
 
 ## License
 
