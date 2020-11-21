@@ -1,6 +1,6 @@
 Stagnum as a bot for the Discord application and interacting with GitHub requires two tokens from different APIs: from the Discord API and the GitHub API, respectively. They must be specified in the configuration file following strong typing.
 
-Setup
+### Setup
 
 When the bot application is launched for the first time, as well as if all the necessary libraries are present, it will create a .cfg configuration file with the written lines and inform you about this in the console and stop its work, but will not close the terminal itself.
 
