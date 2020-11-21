@@ -1,10 +1,10 @@
-﻿# Stratum
+﻿# Stagnum
 
 ![license](https://img.shields.io/github/license/Falcion/Stratum?color=blue) ![release](https://img.shields.io/github/v/tag/Falcion/Stratum?color=brightgreen&label=release) ![build](https://img.shields.io/github/workflow/status/Falcion/Stratum/.NET%20Core)
 
-Stratum is a Discord bot that allows users to do requests to GitHub API and get information about it.
+Stagnum is a Discord bot that allows users to do requests to GitHub API and get information about it.
 
-Stratum creates requests to GitHub API through Discord API. With commands, user-defined functions and custom parameters, it provides flexible functionality for creating these queries.
+Stagnum creates requests to GitHub API through Discord API. With commands, user-defined functions and custom parameters, it provides flexible functionality for creating these queries.
 
 ## Prerequisites
 
@@ -18,11 +18,11 @@ Before you begin, ensure you have met the following requirements:
 
 If you want to install source code, use GitHub CLI:
 
-``` gh repo clone Falcion/Stratum ```
+``` gh repo clone Falcion/Stagnum ```
 
 If you want to install application, follow this link: [any OS](https://github.com/Falcion/Stratum/releases/latest/download/anyOS.zip).
 
-## Using Stratum
+## Using Stagnum
 
 To use Stratum, follow these steps:
 
@@ -31,14 +31,14 @@ To use Stratum, follow these steps:
 	3. Open the .cfg format file and enter the required parameters.
 	4. Start the bot again or start debugging, if you entered everything in the correct format, it will start its work.
 
-## Contributing to Stratum
+## Contributing to Stagnum
 
 To contribute to Stratum, follow these steps:
 
 	1. Fork this repository.
 	2. Create a branch: `git checkout -b main`.
 	3. Make your changes and commit them: `git commit -m '<message>'`
-	4. Push to the original branch: `git push origin Stratum`
+	4. Push to the original branch: `git push origin Stagnum`
 	5. Create the pull request.
 
 ## Contact
