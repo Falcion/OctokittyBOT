@@ -10,7 +10,7 @@ using Discord.WebSocket;
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Stratum
+namespace Stagnum
 {
     public class Program
     {

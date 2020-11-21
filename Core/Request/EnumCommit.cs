@@ -2,7 +2,7 @@
 
 using Octokit;
 
-namespace Stratum.Body.Request
+namespace Stagnum.Core.Request
 {
     public static class EnumCommit
     {

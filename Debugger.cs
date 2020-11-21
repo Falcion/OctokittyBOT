@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Stratum
+namespace Stagnum
 {
     public static class Debugger
     {

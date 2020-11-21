@@ -2,7 +2,7 @@
 
 using Octokit;
 
-namespace Stratum.Body.Parser
+namespace Stagnum.Core.Parser
 {
     public static class AccountEnum
     {

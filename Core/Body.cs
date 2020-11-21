@@ -7,7 +7,7 @@ using Discord.Commands;
 
 using Octokit;
 
-namespace Stratum.Core
+namespace Stagnum.Core
 {
     public class Body : ModuleBase<SocketCommandContext>
     {
@@ -28,7 +28,7 @@ namespace Stratum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;

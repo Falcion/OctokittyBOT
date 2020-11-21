@@ -7,11 +7,10 @@ using Discord.Commands;
 
 using Octokit;
 
-using Stratum.Body;
-using Stratum.Body.Request;
-using Stratum.Body.Parser;
+using Stagnum.Core.Request;
+using Stagnum.Core.Parser;
 
-namespace Stratum.Core
+namespace Stagnum.Core
 {
     public class Head : ModuleBase<SocketCommandContext>
     {
@@ -32,7 +31,7 @@ namespace Stratum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;
@@ -154,7 +153,7 @@ namespace Stratum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;
@@ -286,7 +285,7 @@ namespace Stratum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;
@@ -454,7 +453,7 @@ namespace Stratum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;
@@ -658,7 +657,7 @@ namespace Stratum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;

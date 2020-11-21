@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Octokit;
 
-namespace Stratum.Body.Parser
+namespace Stagnum.Core.Parser
 {
     public static class PeriodEnum
     {
