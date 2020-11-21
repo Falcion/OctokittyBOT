@@ -2,8 +2,9 @@
 .gitattributes export-ignore
 .gitignore export-ignore
 README.md export-ignore
-SECURITY.md export-ignore
 LICENSE export-ignore
+
+docs/ export-ignore
 
 # Text Qualifier
 * text=auto
