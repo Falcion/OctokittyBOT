@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Stratum
+namespace Stagnum
 {
     public static class Configuration
     {

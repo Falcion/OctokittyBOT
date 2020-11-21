@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Stratum
+namespace Stagnum
 {
     public static class Logger
     {

@@ -69,7 +69,7 @@ namespace Stagnum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;
@@ -104,7 +104,7 @@ namespace Stagnum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;
@@ -140,7 +140,7 @@ namespace Stagnum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;
@@ -176,7 +176,7 @@ namespace Stagnum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;
@@ -211,7 +211,7 @@ namespace Stagnum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;
@@ -249,7 +249,7 @@ namespace Stagnum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;
@@ -304,7 +304,7 @@ namespace Stagnum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;
@@ -360,7 +360,7 @@ namespace Stagnum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;
@@ -396,7 +396,7 @@ namespace Stagnum.Core
         {
             string? GIT_TOKEN = Configuration.getGitToken();
 
-            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stratum"));
+            GitHubClient git = new GitHubClient(new ProductHeaderValue("Stagnum"));
             Credentials tokenAuth = new Credentials(GIT_TOKEN);
 
             git.Credentials = tokenAuth;
