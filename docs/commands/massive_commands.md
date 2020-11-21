@@ -1,4 +1,4 @@
-Command arguments are divided into three types: mandatory arguments, which are enclosed in square brackets `[]`, optional arguments, which are enclosed in parentheses `()`, and array arguments that can contain a different set of arguments, they are enclosed by `<>` symbols.
+Command arguments are divided into three types: mandatory arguments, which are enclosed in square brackets `[]`, optional arguments, which are enclosed in parentheses `()`.
 
 ### Massive Commands
 
