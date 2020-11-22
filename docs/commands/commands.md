@@ -10,7 +10,7 @@ Stagnum accepts commands both on servers in any channel and in private messages.
 
 Informational commands do not differ in heavy typing of arguments and are easy to enter data. They execute the simplest functionality of interacting with the API of the GitHub service, i.e., work with its simplest elements, for example: getting information about a repository, user, commit or pull request.
 
-2. **Massive information commands.**
+2. [Massive information commands](https://github.com/Falcion/Stagnum/wiki/Massive-Commands).
 
 In information-massive commands, support for the functionality of pages appears. They execute the simplest functionality of interacting with the API, although they make up a massive request that returns lists of objects, for example: releases of the repository, or its branches.
 
