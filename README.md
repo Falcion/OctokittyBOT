@@ -1,6 +1,6 @@
 # Stagnum
 
-![License](https://img.shields.io/github/license/Falcion/Stratum?color=brightgreen)
+![License](https://img.shields.io/github/license/Falcion/Stagnum?color=brightgreen)
 ![Release](https://img.shields.io/github/v/tag/Falcion/Stagnum?color=brightgreen&label=release)
 ![Build](https://img.shields.io/github/workflow/status/Falcion/Stagnum/.NET%20Core)
 
