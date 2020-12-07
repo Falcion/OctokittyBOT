@@ -10,7 +10,7 @@ LICENSE export-ignore
 
 *.md text eolf=lf
 
-.conf text eolf=crlf
+*.conf text eolf=crlf
 
 # Code Qualifier
 *.cs diff=csharp eolf=crlf
