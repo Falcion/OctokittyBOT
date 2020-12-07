@@ -1,0 +1,16 @@
+# Export Ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+
+README.md export-ignore
+LICENSE export-ignore
+
+# Text Qualifier
+* text=auto
+
+*.md text eolf=lf
+
+.conf text eolf=crlf
+
+# Code Qualifier
+*.cs diff=csharp eolf=crlf
