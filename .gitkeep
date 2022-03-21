@@ -1,0 +1,13 @@
+# GITKEEP of CSHARP project.
+#
+# Dependencies.
+
+**/META-INF/*
+
+# Auto-generated sources.
+
+**/generated/*
+
+# Essentials of CSHARP.
+
+.essentials/*
