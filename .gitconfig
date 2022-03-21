@@ -1,0 +1,336 @@
+# GITCONFIG of CSHARP project.
+#
+# Improving aliases for a GIT configuration.
+
+[alias]
+
+    # — display every of aliases inside the GIT configuration.
+
+    -aliases = !git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'
+    
+    # — edit the settings of the repository.
+
+    -bc = rev-parse --abbrev-ref HEAD
+    -bu = !git rev-parse --abbrev-ref --symbolic-full-name "@{u}"
+
+    # — set up the stream.
+
+    -up.stream = !git branch --set-upstream-to=$(git bu)
+
+    # — delete given branch.
+
+    -delete.branch = branch -D
+
+    # — display every branch in current repository.
+
+    -display.branch = !git branch
+    -display.branches = !git branch -a 
+
+    # — display the LFS.
+
+    -ls = ls-files
+
+    # — check out the repository.
+
+    -co = checkout
+    -co.branch = checkout -b
+
+    # — push changes made in the branch.
+
+    -cm = !git commit -m
+    -cm.add = !git add -A && git cm
+    -cm.edit = commit -a --amend
+    -amend = !git commit --amend --no-edit
+    -amend.all = !git add -A && git amend
+
+    # — reword the commit.
+
+    -reword = commit --amend
+
+    # — unstage changes of past commit.
+
+    -uncommit = reset --soft HEAD~1
+
+    # — fetch commits and branches.
+
+    -read = !git fetch -p
+    -read.all = !git fetch -a -p
+
+    # — update main branch.
+
+    -up = !git pull --rebase --prune $@
+    -update = !git read && git rebase origin/main
+    -update.main = !git pull origin main
+    -update.branch = !git pull origin $(git bc)
+
+    # — force-push of commit without lease.
+
+    -push.lease = push --force-with-lease
+
+    # — functioning with modules of repository.
+
+    -cm.sm = !git cm "SUBMODULE REFERENCE UPDATED"
+    -update.sm = !git pull --recurse-submodules && git submodule update --init --recursive
+
+    # — waypoint any changes in unsaved history.
+
+    -wp.commit = commit -am "WIPPOINT"
+    -sp.commit = !git add -A && git commit -m 'SAVEPOINT'
+
+    # — rebase each other commit.
+
+    -rebase = rebase -x 'git reset --soft HEAD~1 && git commit -C HEAD@{1}'
+
+    # — reset changes.
+
+    -undo = reset HEAD~1 --mixed
+    -unstage = reset
+    -uncommit = reset --soft HEAD^
+    -reset.head = reset HEAD --hard
+    -reset.branch = reset --hard $(git bu)
+    -wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+
+    # — merge branches.
+
+    -mg = !git merge
+    -mg.nf = !git merge --no-ff
+
+    # — set up the audit.
+
+    -log.lite = log --oneline --decorate
+    -log.last = log --abbrev-commit --decorate --format=format:'%C(bold red)%h%C(reset) - %C(bold blue)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold yellow)%d%C(reset) %n''%C(dim yellow)%H%C(reset) - %C(white)%s%C(reset) %n''%C(green)-(Committer: %cn <%ce>)%C(reset) %C(dim white)-(Author: %an <%ae>)%C(reset)' -1 HEAD --stat
+    -log.branch = log --graph --abbrev-commit --decorate --format=format:'%C(bold red)%h%C(reset) - %C(bold blue)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold yellow)%d%C(reset) %n''%C(dim yellow)%H%C(reset) - %C(white)%s%C(reset) %n''%C(green)-(Committer: %cn <%ce>)%C(reset) %C(dim white)-(Author: %an <%ae>)%C(reset)' HEAD --stat
+    -log.repos = log --graph --abbrev-commit --decorate --format=format:'%C(bold red)%h%C(reset) - %C(bold blue)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold yellow)%d%C(reset) %n''%C(dim yellow)%H%C(reset) - %C(white)%s%C(reset) %n''%C(green)-(Committer: %cn <%ce>)%C(reset) %C(dim white)-(Author: %an <%ae>)%C(reset)' --all --stat
+    -log.current = "!myname=$(git config --get user.name);myemail=$(git config --get user.email); git log --graph --abbrev-commit --decorate --author $myemail " HEAD --stat
+
+
+# Editing core module of the GIT config.
+
+[core]
+
+    # — disable paginating system.
+
+    pager = cat
+
+    # — edit the default «IGNORE» files.
+
+    excludesfile = ~/.gitignore
+
+    # — declare mode of commands with output.
+
+    quotepath = false
+
+    # — edit endings preferences in repository.
+
+    autocrlf = input
+    safecrlf = warn
+
+    # — launch an editor with specified values.
+
+    editor = emacsclient -t -a emacs
+
+# Editing color module of the GIT config.
+
+[color]
+
+    ui = true
+    pager = true
+    interactive = auto
+    grep = always
+    decorate = always
+    showbranch = always
+
+# Editing color module in branches interface.
+
+[color "branch"]
+
+    current = green bold
+    local = magenta
+    remote = cyan
+
+# Editing color module in differences interface.
+
+[color "diff"]
+
+    old = red
+    new = green
+    meta = cyan
+    frag = magenta
+    whitespace = yellow reverse
+
+# Editing color module in status interface.
+
+[color "status"]
+
+    added = green
+    branch = green bold
+    changed = cyan
+    deleted = red dim
+    untracked = magenta
+
+[branch]
+
+    autosetuprebase = always
+
+# Editing differences module in a GIT config.
+
+[diff]
+
+    # — declare default editor in differences.
+
+    tool = code
+
+    # — enable showing up renames.
+
+    renames = true
+
+    # — assume differences between specified regex.
+
+    wordRegex = .
+
+    # — display information about current modules.
+
+    submodule = log
+
+    # — enable better and descriptive initials.
+
+    mnemonicPrefix = true
+
+
+# — disable prompt of differences.
+
+[difftool "vscode"]
+
+    cmd = code --wait --diff $LOCAL $REMOTE
+
+# — enable auto-fetch of modules.
+
+[fetch]
+
+    recurseSubmodules = on-demand
+
+[grep]
+
+    # — set up highlight matches.
+
+    break = true
+    heading = true
+    lineNumber = true
+
+    # — consider most of regex.
+
+    extendedRegexp = true
+
+
+# Editing audit module of a GIT config.
+
+[log]
+
+    # — automatically follow single path.
+
+    follow = true
+
+    # — disable decorating in reference audit.
+
+    decorate = false
+
+    # — use abbreviate code of commits.
+
+    abbrevCommit = true
+
+
+[credential]
+
+    # — external helping module of credentials.
+
+    helper = osxkeychain
+
+    # — acquire credential as component of HTTP.
+
+    useHttpPath = true
+
+
+# Editing merge module of a GIT config.
+
+[merge]
+
+    ff = false
+
+[mergetool]
+
+    # — clean up backup files created by editor.
+
+    keepBackup = false
+
+    # — clean up the temporary.
+
+    keepTemporaries = false
+
+    # — dedicated directory for temporary.
+
+    writeToTemp = true
+
+    # — accept any files prompts in case of merging modules.
+
+    prompt = false
+
+
+[page]
+
+    show = diff-so-fancy | less --tabs=4 -RFX
+
+
+[pull]
+
+    rebase = merges
+
+
+[push]
+
+    # — default push should upload current branch to the target.
+
+    default = upstream
+
+    # — push tags with commits in reachable upstream.
+
+    followTags = true
+
+# Editing the rebase module of a GIT config.
+
+[rebase]
+
+    # — rebase advanced usage.
+
+    autoSquash = true
+    autoStash = true
+
+[rerere]
+
+    enabled = true
+    autoupdate = true
+
+[status]
+
+    # — display module referencing change summaries in status.
+
+    submoduleSummary = true
+
+    # — recursively traverse untracked directories to display context.
+
+    showUntrackedFiles = all
+
+# Editing tags module of a GIT config.
+
+[tag]
+
+    sort = version:refname
+
+[versionsort]
+
+    prereleaseSuffix = -pre
+    prereleaseSuffix = .pre
+    prereleaseSuffix = -beta
+    prereleaseSuffix = .beta
+    prereleaseSuffix = -rc
+    prereleaseSuffix = .rc
+    
